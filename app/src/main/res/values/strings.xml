@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Health Check</string>
+    <string name="main_blood_pressure">Blood Pressure</string>
+    <string name="main_weight">Weight</string>
+    <string name="main_glucose_level">Glucose Level</string>
+    <string name="main_statistic">Statistic</string>
+    <string name="settings">Settings</string>
+</resources>
