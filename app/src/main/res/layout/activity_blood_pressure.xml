@@ -36,22 +36,26 @@
     <EditText
         android:id="@+id/pressure_systolic_ET"
         style="@style/EditTextNumber"
-        android:layout_marginStart="32dp"
-        app:layout_constraintStart_toEndOf="@+id/pressure_systolic_TV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/pressure_systolic_TV" />
-
 
     <EditText
         android:id="@+id/pressure_diastolic_ET"
         style="@style/EditTextNumber"
-        app:layout_constraintStart_toStartOf="@id/pressure_systolic_ET"
-        app:layout_constraintTop_toBottomOf="@id/pressure_diastolic_TV" />
+        app:layout_constraintTop_toBottomOf="@id/pressure_diastolic_TV"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5" />
 
     <EditText
         android:id="@+id/pressure_pulse_ET"
         style="@style/EditTextNumber"
-        app:layout_constraintStart_toStartOf="@id/pressure_systolic_ET"
-        app:layout_constraintTop_toBottomOf="@id/pressure_pulse_TV" />
+        app:layout_constraintTop_toBottomOf="@id/pressure_pulse_TV"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5" />
 
     <Button
         android:id="@+id/pressure_cancel_Btn"

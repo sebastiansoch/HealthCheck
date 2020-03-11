@@ -17,6 +17,7 @@
         <item name="android:maxLength">3</item>
         <item name="android:textSize">18sp</item>
         <item name="android:gravity">center</item>
+        <item name="android:layout_marginTop">8dp</item>
     </style>
 
     <style name="EditTextNumberDecimal">
@@ -28,6 +29,7 @@
         <item name="android:maxLength">5</item>
         <item name="android:textSize">18sp</item>
         <item name="android:gravity">center</item>
+        <item name="android:layout_marginTop">8dp</item>
     </style>
 
     <style name="TextViewNumberLbl">
@@ -46,7 +48,7 @@
     <style name="Button">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@color/colorPrimary</item>
         <item name="android:textSize">18sp</item>
+        <item name="android:background">@drawable/action_button</item>
     </style>
 </resources>
