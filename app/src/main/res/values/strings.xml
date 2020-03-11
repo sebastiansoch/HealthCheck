@@ -1,15 +1,18 @@
 <resources>
     <string name="app_name">Health Check</string>
     <string name="main_blood_pressure">Blood Pressure</string>
-    <string name="main_weight">Weight</string>
+    <string name="main_body_weight">Body Weight</string>
     <string name="main_glucose_level">Glucose Level</string>
     <string name="main_statistic">Statistic</string>
     <string name="settings">Settings</string>
-    <string name="settings_change_language">Change language</string>
+    <string name="settings_change_language">Change Language</string>
     <string name="settings_sync_data">Sync, Save Data</string>
     <string name="blood_pressure_systolic">Systolic (mm Hg)</string>
     <string name="blood_pressure_diastolic">Diastolic (mm Hg)</string>
-    <string name="blood_pressure_pulse">Pulse</string>
+    <string name="blood_pressure_pulse">Pulse (bpm)</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
+    <string name="glucose_level_mmol">Glucose Level (mmol/l)</string>
+    <string name="glucose_level_mg">Glucose Level (mg/dl)</string>
+    <string name="body_weight">Body Weight (kg)</string>
 </resources>

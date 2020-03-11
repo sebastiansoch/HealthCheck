@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".BloodPressure"></activity>
+        <activity android:name=".BodyWeight"></activity>
+        <activity android:name=".Statistic" />
+        <activity android:name=".GlucoseLevel" />
+        <activity android:name=".BloodPressure" />
         <activity android:name=".Settings" />
         <activity android:name=".MainActivity">
             <intent-filter>

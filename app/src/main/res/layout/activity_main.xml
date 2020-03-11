@@ -13,7 +13,7 @@
         android:contentDescription="@string/main_blood_pressure"
         android:background="@drawable/background_image_button"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/main_weight_Btn"
+        app:layout_constraintEnd_toStartOf="@+id/main_body_weight_Btn"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -21,10 +21,10 @@
         app:srcCompat="@drawable/ic_main_blood_pressure" />
 
     <ImageButton
-        android:id="@+id/main_weight_Btn"
+        android:id="@+id/main_body_weight_Btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/main_weight"
+        android:contentDescription="@string/main_body_weight"
         android:background="@drawable/background_image_button"
         app:layout_constraintEnd_toStartOf="@+id/main_glucose_level_Btn"
         app:layout_constraintHorizontal_chainStyle="spread"
@@ -40,7 +40,7 @@
         android:background="@drawable/background_image_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toEndOf="@+id/main_weight_Btn"
+        app:layout_constraintStart_toEndOf="@+id/main_body_weight_Btn"
         app:layout_constraintTop_toTopOf="@+id/main_blood_pressure_Btn"
         app:srcCompat="@drawable/ic_main_glucose_level" />
 
@@ -53,7 +53,7 @@
         android:background="@drawable/background_image_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_weight_Btn"
+        app:layout_constraintTop_toBottomOf="@+id/main_body_weight_Btn"
         app:srcCompat="@drawable/ic_main_statistic" />
 
     <ImageButton
@@ -68,4 +68,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_main_settings" />
+
+    <TextView
+        style="@style/TextViewButtonLbl"
+        android:text="@string/main_blood_pressure"
+        app:layout_constraintTop_toBottomOf="@id/main_blood_pressure_Btn"
+        app:layout_constraintStart_toStartOf="@id/main_blood_pressure_Btn"
+        app:layout_constraintEnd_toEndOf="@id/main_blood_pressure_Btn" />
+
+    <TextView
+        style="@style/TextViewButtonLbl"
+        android:text="@string/main_body_weight"
+        app:layout_constraintTop_toBottomOf="@id/main_body_weight_Btn"
+        app:layout_constraintStart_toStartOf="@id/main_body_weight_Btn"
+        app:layout_constraintEnd_toEndOf="@id/main_body_weight_Btn" />
+
+    <TextView
+        style="@style/TextViewButtonLbl"
+        android:text="@string/main_glucose_level"
+        app:layout_constraintTop_toBottomOf="@id/main_glucose_level_Btn"
+        app:layout_constraintStart_toStartOf="@id/main_glucose_level_Btn"
+        app:layout_constraintEnd_toEndOf="@id/main_glucose_level_Btn" />
+
+    <TextView
+        style="@style/TextViewButtonLbl"
+        android:text="@string/main_statistic"
+        app:layout_constraintTop_toBottomOf="@id/main_statistic_Btn"
+        app:layout_constraintStart_toStartOf="@id/main_statistic_Btn"
+        app:layout_constraintEnd_toEndOf="@id/main_statistic_Btn" />
 </androidx.constraintlayout.widget.ConstraintLayout>

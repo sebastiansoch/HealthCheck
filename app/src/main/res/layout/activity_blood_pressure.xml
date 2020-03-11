@@ -8,75 +8,67 @@
 
     <TextView
         android:id="@+id/pressure_systolic_TV"
-        style="@style/TextView"
+        style="@style/TextViewNumberLbl"
         android:layout_marginStart="16dp"
-        android:labelFor="@id/pressure_systolic_ET"
+        android:labelFor="@id/glucose_level_ET"
         android:text="@string/blood_pressure_systolic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.2" />
+        app:layout_constraintVertical_bias="0.1" />
 
     <TextView
         android:id="@+id/pressure_diastolic_TV"
-        style="@style/TextView"
+        style="@style/TextViewNumberLbl"
         android:labelFor="@id/pressure_diastolic_ET"
         android:text="@string/blood_pressure_diastolic"
         app:layout_constraintStart_toStartOf="@+id/pressure_systolic_TV"
-        app:layout_constraintTop_toBottomOf="@+id/pressure_systolic_TV" />
+        app:layout_constraintTop_toBottomOf="@+id/pressure_systolic_ET" />
 
     <TextView
         android:id="@+id/pressure_pulse_TV"
-        style="@style/TextView"
+        style="@style/TextViewNumberLbl"
         android:labelFor="@id/pressure_pulse_ET"
         android:text="@string/blood_pressure_pulse"
         app:layout_constraintStart_toStartOf="@+id/pressure_systolic_TV"
-        app:layout_constraintTop_toBottomOf="@+id/pressure_diastolic_TV" />
+        app:layout_constraintTop_toBottomOf="@+id/pressure_diastolic_ET" />
 
     <EditText
         android:id="@+id/pressure_systolic_ET"
-        style="@style/EditText"
+        style="@style/EditTextNumber"
         android:layout_marginStart="32dp"
-        app:layout_constraintBottom_toBottomOf="@id/pressure_systolic_TV"
         app:layout_constraintStart_toEndOf="@+id/pressure_systolic_TV"
-        app:layout_constraintTop_toTopOf="@id/pressure_systolic_TV" />
+        app:layout_constraintTop_toBottomOf="@id/pressure_systolic_TV" />
 
 
     <EditText
         android:id="@+id/pressure_diastolic_ET"
-        style="@style/EditText"
-        app:layout_constraintBottom_toBottomOf="@id/pressure_diastolic_TV"
+        style="@style/EditTextNumber"
         app:layout_constraintStart_toStartOf="@id/pressure_systolic_ET"
-        app:layout_constraintTop_toTopOf="@id/pressure_diastolic_TV" />
+        app:layout_constraintTop_toBottomOf="@id/pressure_diastolic_TV" />
 
     <EditText
         android:id="@+id/pressure_pulse_ET"
-        style="@style/EditText"
-        app:layout_constraintBottom_toBottomOf="@id/pressure_pulse_TV"
+        style="@style/EditTextNumber"
         app:layout_constraintStart_toStartOf="@id/pressure_systolic_ET"
-        app:layout_constraintTop_toTopOf="@id/pressure_pulse_TV" />
+        app:layout_constraintTop_toBottomOf="@id/pressure_pulse_TV" />
 
     <Button
-        android:id="@+id/pressure_cancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/pressure_cancel_Btn"
+        style="@style/Button"
         android:text="@string/cancel"
-        android:textSize="24sp"
         android:layout_marginEnd="32dp"
-        app:layout_constraintEnd_toStartOf="@id/pressure_save"
-        app:layout_constraintTop_toTopOf="@id/pressure_save"
-        app:layout_constraintVertical_bias="0.6" />
+        app:layout_constraintEnd_toStartOf="@id/pressure_save_Btn"
+        app:layout_constraintTop_toTopOf="@id/pressure_save_Btn" />
 
     <Button
-        android:id="@+id/pressure_save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/pressure_save_Btn"
+        style="@style/Button"
         android:text="@string/save"
-        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHorizontal_bias="0.8"
-        app:layout_constraintVertical_bias="0.6"/>
+        app:layout_constraintVertical_bias="0.8"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
