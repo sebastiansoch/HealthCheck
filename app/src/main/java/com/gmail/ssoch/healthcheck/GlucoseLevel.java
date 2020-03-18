@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class GlucoseLevel extends AppCompatActivity {
+public class GlucoseLevel extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

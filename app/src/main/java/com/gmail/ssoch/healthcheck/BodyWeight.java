@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class BodyWeight extends AppCompatActivity {
+public class BodyWeight extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
