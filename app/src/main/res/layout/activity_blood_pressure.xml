@@ -59,7 +59,7 @@
 
     <Button
         android:id="@+id/pressure_cancel_Btn"
-        style="@style/Button"
+        style="@style/ActionButton"
         android:text="@string/cancel"
         android:layout_marginEnd="32dp"
         app:layout_constraintEnd_toStartOf="@id/pressure_save_Btn"
@@ -67,7 +67,7 @@
 
     <Button
         android:id="@+id/pressure_save_Btn"
-        style="@style/Button"
+        style="@style/ActionButton"
         android:text="@string/save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
