@@ -2,8 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:id="@+id/glucose_level_layout"
+    style="@style/Layout"
     tools:context=".GlucoseLevel">
 
     <TextView
@@ -28,18 +28,18 @@
     <EditText
         android:id="@+id/glucose_level_mmol_ET"
         style="@style/EditTextNumberDecimal"
-        app:layout_constraintTop_toBottomOf="@id/glucose_level_mmol_TV"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/glucose_level_mmol_TV" />
 
     <EditText
         android:id="@+id/glucose_level_mg_ET"
         style="@style/EditTextNumber"
-        app:layout_constraintTop_toBottomOf="@id/glucose_level_mg_TV"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/glucose_level_mg_TV" />
 
     <Button
         android:id="@+id/glucose_level_save_Btn"
@@ -47,10 +47,11 @@
         android:text="@string/save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.8"
-        app:layout_constraintVertical_bias="0.8"/>
+        app:layout_constraintVertical_bias="0.8" />
+
     <Button
         android:id="@+id/glucose_level_cancel_Btn"
         style="@style/Button"

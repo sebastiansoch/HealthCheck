@@ -2,16 +2,20 @@ package com.gmail.ssoch.healthcheck;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.gmail.ssoch.healthcheck.dao.HealthCheckDataDao;
 import com.gmail.ssoch.healthcheck.dao.data.BloodPressureData;
 import com.gmail.ssoch.healthcheck.dao.file.HealthCheckDataDaoFile;
+import com.gmail.ssoch.healthcheck.utils.DataParser;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,6 +23,16 @@ import java.util.Date;
 public class BloodPressure extends AppCompatActivity {
 
     private HealthCheckDataDao healthCheckDataDao;
+
+    private ConstraintLayout layout;
+    private ConstraintLayout.OnTouchListener layoutOnTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+            return true;
+        }
+    };
 
     private EditText systolicET;
     private EditText diastolicET;
@@ -75,14 +89,17 @@ public class BloodPressure extends AppCompatActivity {
 
         healthCheckDataDao = new HealthCheckDataDaoFile(this);
 
-        systolicET = findViewById(R.id.pressure_systolic_ET);
-        diastolicET = findViewById(R.id.pressure_diastolic_ET);
-        pulseET = findViewById(R.id.pressure_pulse_ET);
+        layout = findViewById(R.id.blood_pressure_layout);
+        layout.setOnTouchListener(layoutOnTouchListener);
 
-        saveBtn = findViewById(R.id.pressure_save_Btn);
+        systolicET = findViewById(R.id.blood_pressure_systolic_ET);
+        diastolicET = findViewById(R.id.blood_pressure_diastolic_ET);
+        pulseET = findViewById(R.id.blood_pressure_pulse_ET);
+
+        saveBtn = findViewById(R.id.blood_pressure_save_Btn);
         saveBtn.setOnClickListener(saveBtnListener);
 
-        cancelBtn = findViewById(R.id.pressure_cancel_Btn);
+        cancelBtn = findViewById(R.id.blood_pressure_cancel_Btn);
         cancelBtn.setOnClickListener(cancelBtnListener);
     }
 }

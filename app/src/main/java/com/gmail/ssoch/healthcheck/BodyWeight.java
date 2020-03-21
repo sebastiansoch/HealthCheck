@@ -2,16 +2,20 @@ package com.gmail.ssoch.healthcheck;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.gmail.ssoch.healthcheck.dao.HealthCheckDataDao;
 import com.gmail.ssoch.healthcheck.dao.data.BodyWeightData;
 import com.gmail.ssoch.healthcheck.dao.file.HealthCheckDataDaoFile;
+import com.gmail.ssoch.healthcheck.utils.DataParser;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,6 +23,16 @@ import java.util.Date;
 public class BodyWeight extends AppCompatActivity {
 
     private HealthCheckDataDao healthCheckDataDao;
+
+    private ConstraintLayout layout;
+    private ConstraintLayout.OnTouchListener layoutOnTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+            return true;
+        }
+    };
 
     private EditText bodyWeightET;
 
@@ -71,6 +85,9 @@ public class BodyWeight extends AppCompatActivity {
         setContentView(R.layout.activity_body_weight);
 
         healthCheckDataDao = new HealthCheckDataDaoFile(getApplicationContext());
+
+        layout = findViewById(R.id.body_weight_layout);
+        layout.setOnTouchListener(layoutOnTouchListener);
 
         bodyWeightET = findViewById(R.id.body_weight_ET);
 

@@ -2,17 +2,22 @@ package com.gmail.ssoch.healthcheck;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.gmail.ssoch.healthcheck.dao.HealthCheckDataDao;
-import com.gmail.ssoch.healthcheck.dao.data.BodyWeightData;
 import com.gmail.ssoch.healthcheck.dao.data.GlucoseLevelData;
 import com.gmail.ssoch.healthcheck.dao.file.HealthCheckDataDaoFile;
+import com.gmail.ssoch.healthcheck.utils.DataParser;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,8 +26,66 @@ public class GlucoseLevel extends AppCompatActivity {
 
     private HealthCheckDataDao healthCheckDataDao;
 
-    private EditText glucoseLevelMgET;
+    private ConstraintLayout layout;
+    private ConstraintLayout.OnTouchListener layoutOnTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+            return true;
+        }
+    };
+
     private EditText glucoseLevelMmolET;
+    private TextWatcher glucoseLevelMmolWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            if (glucoseLevelMmolET.isFocused()) {
+                String glucoseLevel = glucoseLevelMmolET.getText().toString();
+                if (glucoseLevel != null && !glucoseLevel.isEmpty()) {
+                    double dGlucoseLevel = Double.parseDouble(glucoseLevel);
+                    long glucoseLevelMg = Math.round(dGlucoseLevel * 18);
+                    glucoseLevelMgET.getText().clear();
+                    glucoseLevelMgET.setText(String.valueOf(glucoseLevelMg));
+                }
+            }
+        }
+    };
+
+    private EditText glucoseLevelMgET;
+
+    private TextWatcher glucoseLevelMgWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            if (glucoseLevelMgET.isFocused()) {
+                String glucoseLevel = glucoseLevelMgET.getText().toString();
+                if (glucoseLevel != null && !glucoseLevel.isEmpty()) {
+                    double dGlucoseLevel = Double.parseDouble(glucoseLevel);
+                    double glucoseLevelMmmol = dGlucoseLevel / 18;
+                    String sGlucoseLevelMmmol = String.valueOf(glucoseLevelMmmol);
+
+                    glucoseLevelMmolET.getText().clear();
+                    glucoseLevelMmolET.setText(sGlucoseLevelMmmol);
+                }
+            }
+        }
+    };
 
     private Button saveBtn;
     private Button.OnClickListener saveBtnListener = new View.OnClickListener() {
@@ -47,6 +110,7 @@ public class GlucoseLevel extends AppCompatActivity {
             startActivity(intent);
         }
     };
+
 
     private void parseAndSaveData() throws Exception {
         String currentDate = getCurrentData();
@@ -75,8 +139,14 @@ public class GlucoseLevel extends AppCompatActivity {
 
         healthCheckDataDao = new HealthCheckDataDaoFile(getApplicationContext());
 
+        layout = findViewById(R.id.glucose_level_layout);
+        layout.setOnTouchListener(layoutOnTouchListener);
+
         glucoseLevelMmolET = findViewById(R.id.glucose_level_mmol_ET);
+        glucoseLevelMmolET.addTextChangedListener(glucoseLevelMmolWatcher);
+
         glucoseLevelMgET = findViewById(R.id.glucose_level_mg_ET);
+        glucoseLevelMgET.addTextChangedListener(glucoseLevelMgWatcher);
 
         saveBtn = findViewById(R.id.glucose_level_save_Btn);
         saveBtn.setOnClickListener(saveBtnListener);
