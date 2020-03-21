@@ -7,10 +7,10 @@
     tools:context=".GlucoseLevel">
 
     <TextView
-        android:id="@+id/glucose_level_TV"
+        android:id="@+id/glucose_level_mmol_TV"
         style="@style/TextViewNumberLbl"
         android:layout_marginStart="16dp"
-        android:labelFor="@id/glucose_level_ET"
+        android:labelFor="@id/glucose_level_mmol_ET"
         android:text="@string/glucose_level_mmol"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,13 +22,13 @@
         style="@style/TextViewNumberLbl"
         android:labelFor="@id/glucose_level_mg_ET"
         android:text="@string/glucose_level_mg"
-        app:layout_constraintStart_toStartOf="@+id/glucose_level_TV"
-        app:layout_constraintTop_toBottomOf="@+id/glucose_level_ET" />
+        app:layout_constraintStart_toStartOf="@+id/glucose_level_mmol_TV"
+        app:layout_constraintTop_toBottomOf="@+id/glucose_level_mmol_ET" />
 
     <EditText
-        android:id="@+id/glucose_level_ET"
+        android:id="@+id/glucose_level_mmol_ET"
         style="@style/EditTextNumberDecimal"
-        app:layout_constraintTop_toBottomOf="@id/glucose_level_TV"
+        app:layout_constraintTop_toBottomOf="@id/glucose_level_mmol_TV"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5" />

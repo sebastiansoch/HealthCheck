@@ -9,7 +9,7 @@ import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ImageButton bloodPreasureBtn;
+    private ImageButton bloodPressureBtn;
     private ImageButton bodyWeightBtn;
     private ImageButton glucoseLevelBtn;
     private ImageButton statisticBtn;
@@ -33,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        bloodPreasureBtn = findViewById(R.id.main_blood_pressure_Btn);
-        bloodPreasureBtn.setOnClickListener(new View.OnClickListener() {
+        bloodPressureBtn = findViewById(R.id.main_blood_pressure_Btn);
+        bloodPressureBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, BloodPressure.class);

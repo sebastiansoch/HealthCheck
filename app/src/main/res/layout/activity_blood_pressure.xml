@@ -10,7 +10,7 @@
         android:id="@+id/pressure_systolic_TV"
         style="@style/TextViewNumberLbl"
         android:layout_marginStart="16dp"
-        android:labelFor="@id/glucose_level_ET"
+        android:labelFor="@id/glucose_level_mmol_ET"
         android:text="@string/blood_pressure_systolic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
