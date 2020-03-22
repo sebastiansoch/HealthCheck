@@ -60,8 +60,9 @@
     <Button
         android:id="@+id/blood_pressure_cancel_Btn"
         style="@style/Button"
-        android:layout_marginEnd="32dp"
-        android:text="@string/cancel"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/action_button"
+        android:text="@string/exit"
         app:layout_constraintEnd_toStartOf="@id/blood_pressure_save_Btn"
         app:layout_constraintTop_toTopOf="@id/blood_pressure_save_Btn" />
 
