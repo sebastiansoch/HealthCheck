@@ -1,0 +1,6 @@
+0|90|0|60|low_blood_pressure
+90|120|60|80|normal_blood_pressure
+120|139|80|89|elevated_blood_pressure
+140|159|90|99|high_blood_pressure_stg1
+160|180|100|110|high_blood_pressure_stg2
+180|1000|110|1000|hypertensive_crisis_blood_pressure

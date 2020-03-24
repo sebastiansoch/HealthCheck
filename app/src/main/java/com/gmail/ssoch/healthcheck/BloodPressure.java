@@ -14,8 +14,10 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.gmail.ssoch.healthcheck.dao.HealthCheckDataDao;
 import com.gmail.ssoch.healthcheck.dao.data.BloodPressureData;
+import com.gmail.ssoch.healthcheck.dao.data.BloodPressureNorm;
 import com.gmail.ssoch.healthcheck.dao.file.HealthCheckDataDaoFile;
 import com.gmail.ssoch.healthcheck.utils.DataParser;
+import com.gmail.ssoch.healthcheck.utils.BloodPressureValidator;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -38,20 +40,20 @@ public class BloodPressure extends AppCompatActivity {
     private EditText diastolicET;
     private EditText pulseET;
 
+    private BloodPressureData bloodPressure;
     private Button saveBtn;
     private Button.OnClickListener saveBtnListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             try {
                 parseAndSaveData();
-
-                Intent intent = new Intent(BloodPressure.this, MainActivity.class);
-                startActivity(intent);
+                compareResultsWithNorm();
             } catch (Exception ex) {
                 Toast.makeText(v.getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
     };
+
     private Button cancelBtn;
     private Button.OnClickListener cancelBtnListener = new View.OnClickListener() {
         @Override
@@ -78,8 +80,15 @@ public class BloodPressure extends AppCompatActivity {
     }
 
     private void saveData(String systolic, String diastolic, String pulse, String currentDate) throws Exception {
-        BloodPressureData bloodPressure = new BloodPressureData(systolic, diastolic, pulse, currentDate);
+        bloodPressure = new BloodPressureData(systolic, diastolic, pulse, currentDate);
         healthCheckDataDao.saveBloodPressure(bloodPressure);
+    }
+
+    private void compareResultsWithNorm() throws Exception {
+        BloodPressureValidator validator = new BloodPressureValidator(bloodPressure);
+        validator.checkBloodPressure(healthCheckDataDao.getBloodPressureNorms());
+        validator.checkPulse(healthCheckDataDao.getPulseNorms());
+        Toast.makeText(this, validator.getResultDescription().toString(), Toast.LENGTH_SHORT).show();
     }
 
     @Override

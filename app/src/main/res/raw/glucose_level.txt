@@ -1,0 +1,4 @@
+0|3.9|low_glucose_level
+3.9|5.5|normal_glucose_level
+5.6|6.9|prediabetes_glucose_level
+7.0|1000|diabetes_glucose_level

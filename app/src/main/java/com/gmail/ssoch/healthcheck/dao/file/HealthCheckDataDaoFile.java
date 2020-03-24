@@ -1,13 +1,22 @@
 package com.gmail.ssoch.healthcheck.dao.file;
 
 import android.content.Context;
+import android.util.Range;
 
+import com.gmail.ssoch.healthcheck.R;
 import com.gmail.ssoch.healthcheck.dao.HealthCheckDataDao;
 import com.gmail.ssoch.healthcheck.dao.data.BloodPressureData;
+import com.gmail.ssoch.healthcheck.dao.data.BloodPressureNorm;
 import com.gmail.ssoch.healthcheck.dao.data.BodyWeightData;
 import com.gmail.ssoch.healthcheck.dao.data.GlucoseLevelData;
+import com.gmail.ssoch.healthcheck.dao.data.PulseNorm;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HealthCheckDataDaoFile implements HealthCheckDataDao {
     private final Context appContext;
@@ -83,4 +92,41 @@ public class HealthCheckDataDaoFile implements HealthCheckDataDao {
         return builder.toString();
     }
 
+
+    @Override
+    public List<BloodPressureNorm> getBloodPressureNorms() throws Exception {
+        InputStream inputStream = appContext.getResources().openRawResource(R.raw.blood_pressure);
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+        String readLine = null;
+        List<BloodPressureNorm> bloodPressureNorms = new ArrayList<>();
+
+        while ((readLine = bufferedReader.readLine()) != null) {
+            String[] splitLine = readLine.split("\\|");
+            Range<Integer> systolic = new Range<>(Integer.parseInt(splitLine[0]), Integer.parseInt(splitLine[1]));
+            Range<Integer> diastolic = new Range<>(Integer.parseInt(splitLine[2]), Integer.parseInt(splitLine[3]));
+            String description = splitLine[4];
+            bloodPressureNorms.add(new BloodPressureNorm(systolic, diastolic, description));
+        }
+
+        return bloodPressureNorms;
+    }
+
+    @Override
+    public List<PulseNorm> getPulseNorms() throws Exception {
+        InputStream inputStream = appContext.getResources().openRawResource(R.raw.pulse);
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+        String readLine = null;
+        List<PulseNorm> pulseNorms = new ArrayList<>();
+
+        while ((readLine = bufferedReader.readLine()) != null) {
+            String[] splitLine = readLine.split("\\|");
+            Range<Integer> pulse = new Range<>(Integer.parseInt(splitLine[0]), Integer.parseInt(splitLine[1]));
+            String description = splitLine[2];
+            pulseNorms.add(new PulseNorm(pulse, description));
+        }
+
+        return pulseNorms;
+    }
 }
