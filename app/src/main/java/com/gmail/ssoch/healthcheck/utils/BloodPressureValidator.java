@@ -18,7 +18,7 @@ public class BloodPressureValidator {
         this.bloodPressure = bloodPressure;
     }
 
-    public void checkBloodPressure(List<BloodPressureNorm> bloodPressureNorms) {
+    public void checkBloodPressure(List<BloodPressureNorm> bloodPressureNorms) throws NumberFormatException {
         for (BloodPressureNorm norm : bloodPressureNorms) {
             if (systolicDesc == null && norm.getSystolic().contains(Integer.parseInt(bloodPressure.getSystolic()))) {
                 systolicDesc = norm.getDescription();
@@ -30,7 +30,7 @@ public class BloodPressureValidator {
         }
     }
 
-    public void checkPulse(List<PulseNorm> pulseNorms) {
+    public void checkPulse(List<PulseNorm> pulseNorms) throws NumberFormatException {
         for (PulseNorm norm : pulseNorms) {
             if (norm.getPulse().contains(Integer.parseInt(bloodPressure.getPulse()))) {
                 pulseDesc = norm.getDescription();

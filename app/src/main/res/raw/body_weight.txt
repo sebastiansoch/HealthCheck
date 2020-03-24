@@ -1,0 +1,3 @@
+0|50|low_body_weight
+50|70|normal_body_weight
+70|1000|high_body_weight

@@ -8,7 +8,9 @@ import com.gmail.ssoch.healthcheck.dao.HealthCheckDataDao;
 import com.gmail.ssoch.healthcheck.dao.data.BloodPressureData;
 import com.gmail.ssoch.healthcheck.dao.data.BloodPressureNorm;
 import com.gmail.ssoch.healthcheck.dao.data.BodyWeightData;
+import com.gmail.ssoch.healthcheck.dao.data.BodyWeightNorm;
 import com.gmail.ssoch.healthcheck.dao.data.GlucoseLevelData;
+import com.gmail.ssoch.healthcheck.dao.data.GlucoseLevelNorm;
 import com.gmail.ssoch.healthcheck.dao.data.PulseNorm;
 
 import java.io.BufferedReader;
@@ -128,5 +130,41 @@ public class HealthCheckDataDaoFile implements HealthCheckDataDao {
         }
 
         return pulseNorms;
+    }
+
+    @Override
+    public List<BodyWeightNorm> getBodyWeightNorms() throws IOException {
+        InputStream inputStream = appContext.getResources().openRawResource(R.raw.body_weight);
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+        String readLine = null;
+        List<BodyWeightNorm> bodyWeightNorms = new ArrayList<>();
+
+        while ((readLine = bufferedReader.readLine()) != null) {
+            String[] splitLine = readLine.split("\\|");
+            Range<Double> bodyWeight = new Range<>(Double.parseDouble(splitLine[0]), Double.parseDouble(splitLine[1]));
+            String description = splitLine[2];
+            bodyWeightNorms.add(new BodyWeightNorm(bodyWeight, description));
+        }
+
+        return bodyWeightNorms;
+    }
+
+    @Override
+    public List<GlucoseLevelNorm> getGlucoseLevelNorms() throws IOException {
+        InputStream inputStream = appContext.getResources().openRawResource(R.raw.glucose_level);
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+        String readLine = null;
+        List<GlucoseLevelNorm> glucoseLevelNorm = new ArrayList<>();
+
+        while ((readLine = bufferedReader.readLine()) != null) {
+            String[] splitLine = readLine.split("\\|");
+            Range<Double> glucoseLevel = new Range<>(Double.parseDouble(splitLine[0]), Double.parseDouble(splitLine[1]));
+            String description = splitLine[2];
+            glucoseLevelNorm.add(new GlucoseLevelNorm(glucoseLevel, description));
+        }
+
+        return glucoseLevelNorm;
     }
 }

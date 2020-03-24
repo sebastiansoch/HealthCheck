@@ -15,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.gmail.ssoch.healthcheck.dao.HealthCheckDataDao;
 import com.gmail.ssoch.healthcheck.dao.data.BodyWeightData;
 import com.gmail.ssoch.healthcheck.dao.file.HealthCheckDataDaoFile;
+import com.gmail.ssoch.healthcheck.utils.BodyWeightValidator;
 import com.gmail.ssoch.healthcheck.utils.DataParser;
 
 import java.text.SimpleDateFormat;
@@ -36,15 +37,14 @@ public class BodyWeight extends AppCompatActivity {
 
     private EditText bodyWeightET;
 
+    private BodyWeightData bodyWeight;
     private Button saveBtn;
     private Button.OnClickListener saveBtnListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             try {
                 parseAndSaveData();
-
-                Intent intent = new Intent(BodyWeight.this, MainActivity.class);
-                startActivity(intent);
+                compareResultsWithNorm();
             } catch (Exception ex) {
                 Toast.makeText(v.getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
             }
@@ -75,8 +75,14 @@ public class BodyWeight extends AppCompatActivity {
     }
 
     private void saveData(String weight, String currentDate) throws Exception {
-        BodyWeightData bodyWeight = new BodyWeightData(weight, currentDate);
+        bodyWeight = new BodyWeightData(weight, currentDate);
         healthCheckDataDao.saveBodyWeight(bodyWeight);
+    }
+
+    private void compareResultsWithNorm() throws Exception {
+        BodyWeightValidator validator = new BodyWeightValidator(bodyWeight);
+        validator.checkBodyWeight(healthCheckDataDao.getBodyWeightNorms());
+        Toast.makeText(this, validator.getResultDescription().toString(), Toast.LENGTH_SHORT).show();
     }
 
     @Override

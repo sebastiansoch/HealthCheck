@@ -17,7 +17,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.gmail.ssoch.healthcheck.dao.HealthCheckDataDao;
 import com.gmail.ssoch.healthcheck.dao.data.GlucoseLevelData;
 import com.gmail.ssoch.healthcheck.dao.file.HealthCheckDataDaoFile;
+import com.gmail.ssoch.healthcheck.utils.BodyWeightValidator;
 import com.gmail.ssoch.healthcheck.utils.DataParser;
+import com.gmail.ssoch.healthcheck.utils.GlucoseLevelValidator;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -87,15 +89,14 @@ public class GlucoseLevel extends AppCompatActivity {
         }
     };
 
+    GlucoseLevelData glucoseLevel;
     private Button saveBtn;
     private Button.OnClickListener saveBtnListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             try {
                 parseAndSaveData();
-
-                Intent intent = new Intent(GlucoseLevel.this, MainActivity.class);
-                startActivity(intent);
+                compareResultsWithNorm();
             } catch (Exception ex) {
                 Toast.makeText(v.getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
             }
@@ -128,8 +129,14 @@ public class GlucoseLevel extends AppCompatActivity {
     }
 
     private void saveData(String glucoseLevelMmol, String glucoseLevelMg, String currentDate) throws Exception {
-        GlucoseLevelData glucoseLevel = new GlucoseLevelData(glucoseLevelMmol, glucoseLevelMg, currentDate);
+        glucoseLevel = new GlucoseLevelData(glucoseLevelMmol, glucoseLevelMg, currentDate);
         healthCheckDataDao.saveGlucoseLevel(glucoseLevel);
+    }
+
+    private void compareResultsWithNorm() throws Exception {
+        GlucoseLevelValidator validator = new GlucoseLevelValidator(glucoseLevel);
+        validator.checkGlucoseLevel(healthCheckDataDao.getGlucoseLevelNorms());
+        Toast.makeText(this, validator.getResultDescription().toString(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
