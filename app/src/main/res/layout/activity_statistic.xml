@@ -6,4 +6,89 @@
     android:layout_height="match_parent"
     tools:context=".Statistic">
 
+    <LinearLayout
+        android:id="@+id/statistic_date_range_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingVertical="6dp"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            style="@style/TextViewStatDateRange"
+            android:text="Date range" />
+
+        <TextView
+            style="@style/TextViewStatDateRange"
+            android:gravity="right"
+            android:hint="2000-01-01"
+            android:inputType="date" />
+
+        <ImageButton
+            style="@style/Calendar"
+            android:src="@drawable/ic_stat_calendar" />
+
+        <TextView
+            style="@style/TextViewStatDateRange"
+            android:gravity="right"
+            android:hint="2000-01-01"
+            android:inputType="date" />
+
+        <ImageButton
+            style="@style/Calendar"
+            android:src="@drawable/ic_stat_calendar" />
+    </LinearLayout>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/statistic_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/statistic_date_range_layout">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/statistic_blood_pressure_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/statistic_blood_pressure" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/statistic_pulse" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/statistic_body_weight" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/statistic_glucose_level" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/statistic_chart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/statistic_cancel_Btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statistic_tabs" />
+
+    <Button
+        android:id="@+id/statistic_cancel_Btn"
+        style="@style/Button"
+        android:text="@string/exit"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

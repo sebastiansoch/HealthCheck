@@ -15,4 +15,8 @@
     <string name="glucose_level_mmol">Glucose Level (mmol/l)</string>
     <string name="glucose_level_mg">Glucose Level (mg/dl)</string>
     <string name="body_weight">Body Weight (kg)</string>
+    <string name="statistic_blood_pressure">Blood Pressure</string>
+    <string name="statistic_pulse">Pulse</string>
+    <string name="statistic_body_weight">Body Weight</string>
+    <string name="statistic_glucose_level">Glucose Level</string>
 </resources>
