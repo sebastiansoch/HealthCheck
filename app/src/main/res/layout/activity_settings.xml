@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:contentDescription="@string/settings_change_language"
-        android:background="@drawable/background_image_button"
+        android:background="@drawable/background_small_image_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:contentDescription="@string/settings_sync_data"
-        android:background="@drawable/background_image_button"
+        android:background="@drawable/background_small_image_button"
         app:layout_constraintStart_toStartOf="@+id/settings_language_Btn"
         app:layout_constraintTop_toBottomOf="@+id/settings_language_Btn"
         app:srcCompat="@drawable/ic_settings_sync" />
