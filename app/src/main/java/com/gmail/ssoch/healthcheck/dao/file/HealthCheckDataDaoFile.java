@@ -14,6 +14,7 @@ import com.gmail.ssoch.healthcheck.dao.data.GlucoseLevelNorm;
 import com.gmail.ssoch.healthcheck.dao.data.PulseNorm;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -169,7 +170,58 @@ public class HealthCheckDataDaoFile implements HealthCheckDataDao {
     }
 
     @Override
-    public List<BloodPressureData> getBloodPressureInRange(String beginDate, String endDate) {
-        return null;
+    public List<BloodPressureData> getBloodPressureInRange(Range<String> dataRange) throws IOException {
+        FileInputStream fileInputStream = appContext.openFileInput("hc_blood_pressure.txt");
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
+
+        String readLine = null;
+        List<BloodPressureData> bloodPressureData = new ArrayList<>();
+
+        while ((readLine = bufferedReader.readLine()) != null) {
+            String[] splitLine = readLine.split("\\|");
+            if (dataRange.contains(splitLine[0])) {
+                bloodPressureData.add(new BloodPressureData(splitLine[1], splitLine[2], splitLine[3], splitLine[0]));
+            }
+        }
+
+        return bloodPressureData;
     }
+
+    @Override
+    public List<BodyWeightData> getBodyWeighInRange(Range<String> dataRange) throws IOException {
+        FileInputStream fileInputStream = appContext.openFileInput("hc_body_weight.txt");
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
+
+        String readLine = null;
+        List<BodyWeightData> bodyWeightData = new ArrayList<>();
+
+        while ((readLine = bufferedReader.readLine()) != null) {
+            String[] splitLine = readLine.split("\\|");
+            if (dataRange.contains(splitLine[0])) {
+                bodyWeightData.add(new BodyWeightData(splitLine[1], splitLine[0]));
+            }
+        }
+
+        return bodyWeightData;
+    }
+
+    @Override
+    public List<GlucoseLevelData> getGlucoseLevelInRange(Range<String> dataRange) throws IOException {
+        FileInputStream fileInputStream = appContext.openFileInput("hc_glucose_level.txt");
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
+
+        String readLine = null;
+        List<GlucoseLevelData> glucoseLevelData = new ArrayList<>();
+
+        while ((readLine = bufferedReader.readLine()) != null) {
+            String[] splitLine = readLine.split("\\|");
+            if (dataRange.contains(splitLine[0])) {
+                glucoseLevelData.add(new GlucoseLevelData(splitLine[1], splitLine[2], splitLine[0]));
+            }
+        }
+
+        return glucoseLevelData;
+    }
+
+
 }

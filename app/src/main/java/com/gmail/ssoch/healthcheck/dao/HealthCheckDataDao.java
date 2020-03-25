@@ -1,5 +1,7 @@
 package com.gmail.ssoch.healthcheck.dao;
 
+import android.util.Range;
+
 import com.gmail.ssoch.healthcheck.dao.data.BloodPressureData;
 import com.gmail.ssoch.healthcheck.dao.data.BloodPressureNorm;
 import com.gmail.ssoch.healthcheck.dao.data.BodyWeightData;
@@ -26,5 +28,10 @@ public interface HealthCheckDataDao {
 
     List<GlucoseLevelNorm> getGlucoseLevelNorms() throws IOException;
 
-    List<BloodPressureData> getBloodPressureInRange(String beginDate, String endDate);
+    List<BloodPressureData> getBloodPressureInRange(Range<String> stringRange) throws IOException;
+
+    List<BodyWeightData> getBodyWeighInRange(Range<String> stringRange) throws IOException;
+
+    List<GlucoseLevelData> getGlucoseLevelInRange(Range<String> stringRange) throws IOException;
+
 }
