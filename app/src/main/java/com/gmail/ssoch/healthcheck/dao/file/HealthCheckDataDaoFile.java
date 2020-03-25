@@ -41,7 +41,7 @@ public class HealthCheckDataDaoFile implements HealthCheckDataDao {
 
     private String getParsedBloodPressureData(BloodPressureData bloodPressure) {
         StringBuilder builder = new StringBuilder();
-        builder.append(bloodPressure.getCurrentDate());
+        builder.append(bloodPressure.getMeasurementDate());
         builder.append("|");
         builder.append(bloodPressure.getSystolic());
         builder.append("|");
@@ -65,7 +65,7 @@ public class HealthCheckDataDaoFile implements HealthCheckDataDao {
 
     private String getParsedBodyWeightData(BodyWeightData BodyWeight) {
         StringBuilder builder = new StringBuilder();
-        builder.append(BodyWeight.getCurrentDate());
+        builder.append(BodyWeight.getMeasurementDate());
         builder.append("|");
         builder.append(BodyWeight.getBodyWeight());
         builder.append("\n");
@@ -85,7 +85,7 @@ public class HealthCheckDataDaoFile implements HealthCheckDataDao {
 
     private String getParsedGlucoseLevelData(GlucoseLevelData glucoseLevel) {
         StringBuilder builder = new StringBuilder();
-        builder.append(glucoseLevel.getCurrentDate());
+        builder.append(glucoseLevel.getMeasurementDate());
         builder.append("|");
         builder.append(glucoseLevel.getGlucoseLevelMmol());
         builder.append("|");
@@ -166,5 +166,10 @@ public class HealthCheckDataDaoFile implements HealthCheckDataDao {
         }
 
         return glucoseLevelNorm;
+    }
+
+    @Override
+    public List<BloodPressureData> getBloodPressureInRange(String beginDate, String endDate) {
+        return null;
     }
 }

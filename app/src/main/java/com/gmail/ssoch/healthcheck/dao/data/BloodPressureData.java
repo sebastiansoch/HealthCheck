@@ -4,13 +4,13 @@ public class BloodPressureData {
     private final String systolic;
     private final String diastolic;
     private final String pulse;
-    private final String currentDate;
+    private final String measurementDate;
 
     public BloodPressureData(String systolic, String diastolic, String pulse, String currentDate) {
         this.systolic = systolic;
         this.diastolic = diastolic;
         this.pulse = pulse;
-        this.currentDate = currentDate;
+        this.measurementDate = currentDate;
     }
 
     public String getSystolic() {
@@ -25,7 +25,7 @@ public class BloodPressureData {
         return pulse;
     }
 
-    public String getCurrentDate() {
-        return currentDate;
+    public String getMeasurementDate() {
+        return measurementDate;
     }
 }

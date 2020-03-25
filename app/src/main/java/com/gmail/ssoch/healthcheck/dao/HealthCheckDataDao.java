@@ -25,4 +25,6 @@ public interface HealthCheckDataDao {
     List<BodyWeightNorm> getBodyWeightNorms() throws IOException;
 
     List<GlucoseLevelNorm> getGlucoseLevelNorms() throws IOException;
+
+    List<BloodPressureData> getBloodPressureInRange(String beginDate, String endDate);
 }

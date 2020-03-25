@@ -56,16 +56,19 @@
             android:text="@string/statistic_blood_pressure" />
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/statistic_pulse_tab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/statistic_pulse" />
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/statistic_body_weight_tab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/statistic_body_weight" />
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/statistic_glucose_level_tab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/statistic_glucose_level" />
