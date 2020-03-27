@@ -1,11 +1,15 @@
 package com.gmail.ssoch.healthcheck;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.util.Range;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,6 +31,10 @@ import com.gmail.ssoch.healthcheck.chart.StatisticData;
 import com.gmail.ssoch.healthcheck.dao.file.HealthCheckDataDaoFile;
 import com.google.android.material.tabs.TabLayout;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static com.gmail.ssoch.healthcheck.Statistic.TAB_ITEM.BLOOD_PRESSURE;
@@ -40,7 +48,87 @@ public class Statistic extends AppCompatActivity {
     private HealthCheckDataDaoFile healthCheckDataDao;
     private TabLayout tabLayout;
     private LineChart chart;
-    private Range<String> statisticRange = new Range<>("2020-02-25", "2020-03-21");
+    private Range<String> statisticRange;
+
+    private TextView beginDateTV;
+    private ImageButton beginDateBtn;
+    private DatePickerDialog.OnDateSetListener beginDatePickerDateSetListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                Date date = dateFormat.parse(year + "-" + (month + 1) + "-" + dayOfMonth);
+                if (date.after(new Date())) {
+                    Toast.makeText(Statistic.this, "Begin date is not seated correctly", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                String sBeginDate = dateFormat.format(date);
+                beginDateTV.setText(sBeginDate);
+
+                String sEndDate = endDateTV.getText().toString();
+                statisticRange = Range.create(sBeginDate, sEndDate);
+
+                tabSelectedListener.onTabReselected(tabLayout.getTabAt(tabLayout.getSelectedTabPosition()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+    };
+    private ImageButton.OnClickListener beginDateBtnListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            String[] split = beginDateTV.getText().toString().split("-");
+            int year = Integer.parseInt(split[0]);
+            int month = Integer.parseInt(split[1]) - 1;
+            int day = Integer.parseInt(split[2]);
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(Statistic.this, android.R.style.Theme_Material_Dialog_MinWidth,
+                      beginDatePickerDateSetListener, year, month, day);
+            datePickerDialog.show();
+        }
+    };
+
+    private TextView endDateTV;
+    private ImageButton endDateBtn;
+    private DatePickerDialog.OnDateSetListener endDatePickerDateSetListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                Date date = dateFormat.parse(year + "-" + (month + 1) + "-" + dayOfMonth);
+                Date beginDate = dateFormat.parse(beginDateTV.getText().toString());
+
+                if (date.before(beginDate)) {
+                    Toast.makeText(Statistic.this, "End date is not seated correctly", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                String sEndDate = dateFormat.format(date);
+                endDateTV.setText(sEndDate);
+
+                String sBeginDate = beginDateTV.getText().toString();
+                statisticRange = Range.create(sBeginDate, sEndDate);
+
+                tabSelectedListener.onTabReselected(tabLayout.getTabAt(tabLayout.getSelectedTabPosition()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+    };
+    private ImageButton.OnClickListener endDateBtnListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            String[] split = endDateTV.getText().toString().split("-");
+            int year = Integer.parseInt(split[0]);
+            int month = Integer.parseInt(split[1]) - 1;
+            int day = Integer.parseInt(split[2]);
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(Statistic.this, android.R.style.Theme_Material_Dialog_MinWidth,
+                    endDatePickerDateSetListener, year, month, day);
+            datePickerDialog.show();
+        }
+    };
 
     private TabLayout.OnTabSelectedListener tabSelectedListener = new TabLayout.OnTabSelectedListener() {
         @Override
@@ -113,8 +201,32 @@ public class Statistic extends AppCompatActivity {
 
         chart = findViewById(R.id.statistic_chart);
 
+        beginDateTV = findViewById(R.id.statistic_begin_date_TV);
+        beginDateTV.setText(getPreviousMonth());
+        beginDateBtn = findViewById(R.id.statistic_begin_date_Btn);
+        beginDateBtn.setOnClickListener(beginDateBtnListener);
+
+        endDateTV = findViewById(R.id.statistic_end_date_TV);
+        endDateTV.setText(getCurrentMonth());
+        endDateBtn = findViewById(R.id.statistic_end_date_Btn);
+        endDateBtn.setOnClickListener(endDateBtnListener);
+
+        statisticRange = new Range<>(getPreviousMonth(), getCurrentMonth());
+
         cancelBtn = findViewById(R.id.statistic_cancel_Btn);
         cancelBtn.setOnClickListener(cancelBtnListener);
+    }
+
+    private String getCurrentMonth() {
+        Calendar cal = Calendar.getInstance();
+        int month = cal.get(Calendar.MONTH) + 1;
+        return cal.get(Calendar.YEAR) + "-" + String.format("%02d", month) + "-" + cal.get(Calendar.DAY_OF_MONTH);
+    }
+
+    private String getPreviousMonth() {
+        Calendar cal = Calendar.getInstance();
+        int month = cal.get(Calendar.MONTH);
+        return cal.get(Calendar.YEAR) + "-" + String.format("%02d", month) + "-" + cal.get(Calendar.DAY_OF_MONTH);
     }
 
     private void configureTabLayoutView() {
@@ -126,6 +238,7 @@ public class Statistic extends AppCompatActivity {
         formatXAxis(xLabels);
 
         chart.getLegend().setWordWrapEnabled(true);
+        chart.getDescription().setEnabled(false);
         chart.setData(linedata);
         chart.invalidate();
     }

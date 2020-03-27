@@ -13,7 +13,6 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingVertical="6dp"
-
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -22,22 +21,26 @@
             android:text="Date range" />
 
         <TextView
+            android:id="@+id/statistic_begin_date_TV"
             style="@style/TextViewStatDateRange"
             android:gravity="right"
             android:hint="2000-01-01"
             android:inputType="date" />
 
         <ImageButton
+            android:id="@+id/statistic_begin_date_Btn"
             style="@style/Calendar"
             android:src="@drawable/ic_stat_calendar" />
 
         <TextView
+            android:id="@+id/statistic_end_date_TV"
             style="@style/TextViewStatDateRange"
             android:gravity="right"
             android:hint="2000-01-01"
             android:inputType="date" />
 
         <ImageButton
+            android:id="@+id/statistic_end_date_Btn"
             style="@style/Calendar"
             android:src="@drawable/ic_stat_calendar" />
     </LinearLayout>
@@ -88,8 +91,8 @@
     <Button
         android:id="@+id/statistic_cancel_Btn"
         style="@style/Button"
-        android:text="@string/exit"
         android:layout_marginBottom="12dp"
+        android:text="@string/exit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.8"
