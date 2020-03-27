@@ -11,6 +11,7 @@ import com.gmail.ssoch.healthcheck.dao.data.BodyWeightData;
 import com.gmail.ssoch.healthcheck.dao.data.BodyWeightNorm;
 import com.gmail.ssoch.healthcheck.dao.data.GlucoseLevelData;
 import com.gmail.ssoch.healthcheck.dao.data.GlucoseLevelNorm;
+import com.gmail.ssoch.healthcheck.dao.data.PulseData;
 import com.gmail.ssoch.healthcheck.dao.data.PulseNorm;
 
 import java.io.BufferedReader;
@@ -24,15 +25,19 @@ import java.util.List;
 public class HealthCheckDataDaoFile implements HealthCheckDataDao {
     private final Context appContext;
 
-    public HealthCheckDataDaoFile(Context appContext) {
+    private final String FILE_BLOOD_PRESSURE = "hc_blood_pressure.txt";
+    private final String FILE_PULSE = "hc_pulse.txt";
+    private final String FILE_BODY_WEIGHT = "hc_body_weight.txt";
+    private final String FILE_GLUCOSE_LEVEL = "hc_glucose_level.txt";
 
+    public HealthCheckDataDaoFile(Context appContext) {
         this.appContext = appContext;
     }
 
     @Override
     public void saveBloodPressure(BloodPressureData bloodPressure) throws IOException {
         try {
-            AppendDataToFile appendDataToFile = new AppendDataToFile(appContext, "hc_blood_pressure.txt");
+            AppendDataToFile appendDataToFile = new AppendDataToFile(appContext, FILE_BLOOD_PRESSURE);
             String data = getParsedBloodPressureData(bloodPressure);
             appendDataToFile.append(data);
         } catch (IOException ex) {
@@ -47,8 +52,26 @@ public class HealthCheckDataDaoFile implements HealthCheckDataDao {
         builder.append(bloodPressure.getSystolic());
         builder.append("|");
         builder.append(bloodPressure.getDiastolic());
+        builder.append("\n");
+        return builder.toString();
+    }
+
+    @Override
+    public void savePulse(PulseData pulse) throws IOException {
+        try {
+            AppendDataToFile appendDataToFile = new AppendDataToFile(appContext, FILE_PULSE);
+            String data = getParsedPulseData(pulse);
+            appendDataToFile.append(data);
+        } catch (IOException ex) {
+            throw new IOException("Something went wrong during data saving");
+        }
+    }
+
+    private String getParsedPulseData(PulseData pulse) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(pulse.getMeasurementDate());
         builder.append("|");
-        builder.append(bloodPressure.getPulse());
+        builder.append(pulse.getPulse());
         builder.append("\n");
         return builder.toString();
     }
@@ -56,7 +79,7 @@ public class HealthCheckDataDaoFile implements HealthCheckDataDao {
     @Override
     public void saveBodyWeight(BodyWeightData bodyWeight) throws Exception {
         try {
-            AppendDataToFile appendDataToFile = new AppendDataToFile(appContext, "hc_body_weight.txt");
+            AppendDataToFile appendDataToFile = new AppendDataToFile(appContext, FILE_BODY_WEIGHT);
             String data = getParsedBodyWeightData(bodyWeight);
             appendDataToFile.append(data);
         } catch (IOException ex) {
@@ -76,7 +99,7 @@ public class HealthCheckDataDaoFile implements HealthCheckDataDao {
     @Override
     public void saveGlucoseLevel(GlucoseLevelData glucoseLevel) throws Exception {
         try {
-            AppendDataToFile appendDataToFile = new AppendDataToFile(appContext, "hc_glucose_level.txt");
+            AppendDataToFile appendDataToFile = new AppendDataToFile(appContext, FILE_GLUCOSE_LEVEL);
             String data = getParsedGlucoseLevelData(glucoseLevel);
             appendDataToFile.append(data);
         } catch (IOException ex) {
@@ -171,7 +194,7 @@ public class HealthCheckDataDaoFile implements HealthCheckDataDao {
 
     @Override
     public List<BloodPressureData> getBloodPressureInRange(Range<String> dataRange) throws IOException {
-        FileInputStream fileInputStream = appContext.openFileInput("hc_blood_pressure.txt");
+        FileInputStream fileInputStream = appContext.openFileInput(FILE_BLOOD_PRESSURE);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
 
         String readLine = null;
@@ -180,7 +203,7 @@ public class HealthCheckDataDaoFile implements HealthCheckDataDao {
         while ((readLine = bufferedReader.readLine()) != null) {
             String[] splitLine = readLine.split("\\|");
             if (dataRange.contains(splitLine[0])) {
-                bloodPressureData.add(new BloodPressureData(splitLine[1], splitLine[2], splitLine[3], splitLine[0]));
+                bloodPressureData.add(new BloodPressureData(splitLine[1], splitLine[2], splitLine[0]));
             }
         }
 
@@ -188,8 +211,26 @@ public class HealthCheckDataDaoFile implements HealthCheckDataDao {
     }
 
     @Override
+    public List<PulseData> getPulseInRange(Range<String> dataRange) throws IOException {
+        FileInputStream fileInputStream = appContext.openFileInput(FILE_PULSE);
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
+
+        String readLine = null;
+        List<PulseData> pulseData = new ArrayList<>();
+
+        while ((readLine = bufferedReader.readLine()) != null) {
+            String[] splitLine = readLine.split("\\|");
+            if (dataRange.contains(splitLine[0])) {
+                pulseData.add(new PulseData(splitLine[1], splitLine[0]));
+            }
+        }
+
+        return pulseData;
+    }
+
+    @Override
     public List<BodyWeightData> getBodyWeighInRange(Range<String> dataRange) throws IOException {
-        FileInputStream fileInputStream = appContext.openFileInput("hc_body_weight.txt");
+        FileInputStream fileInputStream = appContext.openFileInput(FILE_BODY_WEIGHT);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
 
         String readLine = null;
@@ -207,7 +248,7 @@ public class HealthCheckDataDaoFile implements HealthCheckDataDao {
 
     @Override
     public List<GlucoseLevelData> getGlucoseLevelInRange(Range<String> dataRange) throws IOException {
-        FileInputStream fileInputStream = appContext.openFileInput("hc_glucose_level.txt");
+        FileInputStream fileInputStream = appContext.openFileInput(FILE_GLUCOSE_LEVEL);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
 
         String readLine = null;

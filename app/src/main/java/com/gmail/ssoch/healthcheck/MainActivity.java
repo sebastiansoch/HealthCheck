@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         bloodPressureBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, BloodPressure.class);
+                Intent intent = new Intent(MainActivity.this, BloodPressureAndPulse.class);
                 startActivity(intent);
             }
         });

@@ -37,7 +37,7 @@ public class BodyWeight extends AppCompatActivity {
 
     private EditText bodyWeightET;
 
-    private BodyWeightData bodyWeight;
+    private BodyWeightData bodyWeightData;
     private Button saveBtn;
     private Button.OnClickListener saveBtnListener = new View.OnClickListener() {
         @Override
@@ -75,12 +75,12 @@ public class BodyWeight extends AppCompatActivity {
     }
 
     private void saveData(String weight, String currentDate) throws Exception {
-        bodyWeight = new BodyWeightData(weight, currentDate);
-        healthCheckDataDao.saveBodyWeight(bodyWeight);
+        bodyWeightData = new BodyWeightData(weight, currentDate);
+        healthCheckDataDao.saveBodyWeight(bodyWeightData);
     }
 
     private void compareResultsWithNorm() throws Exception {
-        BodyWeightValidator validator = new BodyWeightValidator(bodyWeight);
+        BodyWeightValidator validator = new BodyWeightValidator(bodyWeightData);
         validator.checkBodyWeight(healthCheckDataDao.getBodyWeightNorms());
         Toast.makeText(this, validator.getResultDescription().toString(), Toast.LENGTH_SHORT).show();
     }

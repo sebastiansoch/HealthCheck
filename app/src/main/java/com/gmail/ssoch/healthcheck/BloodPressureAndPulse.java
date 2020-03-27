@@ -14,15 +14,16 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.gmail.ssoch.healthcheck.dao.HealthCheckDataDao;
 import com.gmail.ssoch.healthcheck.dao.data.BloodPressureData;
-import com.gmail.ssoch.healthcheck.dao.data.BloodPressureNorm;
+import com.gmail.ssoch.healthcheck.dao.data.PulseData;
 import com.gmail.ssoch.healthcheck.dao.file.HealthCheckDataDaoFile;
 import com.gmail.ssoch.healthcheck.utils.DataParser;
 import com.gmail.ssoch.healthcheck.utils.BloodPressureValidator;
+import com.gmail.ssoch.healthcheck.utils.PulseValidator;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class BloodPressure extends AppCompatActivity {
+public class BloodPressureAndPulse extends AppCompatActivity {
 
     private HealthCheckDataDao healthCheckDataDao;
 
@@ -40,7 +41,9 @@ public class BloodPressure extends AppCompatActivity {
     private EditText diastolicET;
     private EditText pulseET;
 
-    private BloodPressureData bloodPressure;
+    private BloodPressureData bloodPressureData;
+    private PulseData pulseData;
+
     private Button saveBtn;
     private Button.OnClickListener saveBtnListener = new View.OnClickListener() {
         @Override
@@ -58,7 +61,7 @@ public class BloodPressure extends AppCompatActivity {
     private Button.OnClickListener cancelBtnListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(BloodPressure.this, MainActivity.class);
+            Intent intent = new Intent(BloodPressureAndPulse.this, MainActivity.class);
             startActivity(intent);
         }
     };
@@ -69,7 +72,8 @@ public class BloodPressure extends AppCompatActivity {
         String diastolic = diastolicET.getText().toString();
         String pulse = pulseET.getText().toString();
 
-        DataParser.parseBloodPressureData(systolic, diastolic, pulse);
+        DataParser.parseBloodPressureData(systolic, diastolic);
+        DataParser.parsePulseData(pulse);
         saveData(systolic, diastolic, pulse, currentDate);
     }
 
@@ -80,21 +84,26 @@ public class BloodPressure extends AppCompatActivity {
     }
 
     private void saveData(String systolic, String diastolic, String pulse, String currentDate) throws Exception {
-        bloodPressure = new BloodPressureData(systolic, diastolic, pulse, currentDate);
-        healthCheckDataDao.saveBloodPressure(bloodPressure);
+        bloodPressureData = new BloodPressureData(systolic, diastolic, currentDate);
+        pulseData = new PulseData(pulse, currentDate);
+        healthCheckDataDao.saveBloodPressure(bloodPressureData);
+        healthCheckDataDao.savePulse(pulseData);
     }
 
     private void compareResultsWithNorm() throws Exception {
-        BloodPressureValidator validator = new BloodPressureValidator(bloodPressure);
-        validator.checkBloodPressure(healthCheckDataDao.getBloodPressureNorms());
-        validator.checkPulse(healthCheckDataDao.getPulseNorms());
-        Toast.makeText(this, validator.getResultDescription().toString(), Toast.LENGTH_SHORT).show();
+        BloodPressureValidator validatorBP = new BloodPressureValidator(bloodPressureData);
+        validatorBP.checkBloodPressure(healthCheckDataDao.getBloodPressureNorms());
+        Toast.makeText(this, validatorBP.getResultDescription().toString(), Toast.LENGTH_SHORT).show();
+
+        PulseValidator validatorP = new PulseValidator(pulseData);
+        validatorP.checkPulse(healthCheckDataDao.getPulseNorms());
+        Toast.makeText(this, validatorP.getResultDescription().toString(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_blood_pressure);
+        setContentView(R.layout.activity_blood_pressure_and_pulse);
 
         healthCheckDataDao = new HealthCheckDataDaoFile(this);
 

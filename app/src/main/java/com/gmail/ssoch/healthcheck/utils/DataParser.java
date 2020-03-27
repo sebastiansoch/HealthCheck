@@ -3,7 +3,7 @@ package com.gmail.ssoch.healthcheck.utils;
 import java.text.ParseException;
 
 public class DataParser {
-    public static void parseBloodPressureData(String systolic, String diastolic, String pulse) throws ParseException {
+    public static void parseBloodPressureData(String systolic, String diastolic) throws ParseException {
 
         if (systolic == null || systolic.isEmpty()) {
             throw new ParseException("Systolic pressure is not set or set incorrectly", 0);
@@ -12,7 +12,9 @@ public class DataParser {
         if (diastolic == null || diastolic.isEmpty()) {
             throw new ParseException("Diastolic pressure is not set or set incorrectly", 0);
         }
+    }
 
+    public static void parsePulseData(String pulse) throws ParseException {
         if (pulse == null || pulse.isEmpty()) {
             throw new ParseException("Pulse is not set or set incorrectly", 0);
         }
@@ -35,4 +37,5 @@ public class DataParser {
             throw new ParseException("Glucose level, in units mg/dl, is not set or set incorrectly", 0);
         }
     }
+
 }

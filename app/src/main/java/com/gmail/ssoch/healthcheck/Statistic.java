@@ -1,8 +1,11 @@
 package com.gmail.ssoch.healthcheck;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Range;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,11 +14,17 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.gmail.ssoch.healthcheck.chart.BloodPressureChartDataGenerator;
+import com.gmail.ssoch.healthcheck.chart.BloodPressureStatisticData;
+import com.gmail.ssoch.healthcheck.chart.BodyWeightChartDataGenerator;
+import com.gmail.ssoch.healthcheck.chart.BodyWeightStatisticData;
+import com.gmail.ssoch.healthcheck.chart.ChartDataGenerator;
+import com.gmail.ssoch.healthcheck.chart.GlucoseLevelChartDataGenerator;
+import com.gmail.ssoch.healthcheck.chart.GlucoseLevelStatisticData;
+import com.gmail.ssoch.healthcheck.chart.PulseChartDataGenerator;
+import com.gmail.ssoch.healthcheck.chart.PulseStatisticData;
+import com.gmail.ssoch.healthcheck.chart.StatisticData;
 import com.gmail.ssoch.healthcheck.dao.file.HealthCheckDataDaoFile;
-import com.gmail.ssoch.healthcheck.utils.BloodPressureChartData;
-import com.gmail.ssoch.healthcheck.utils.BodyWeightChartData;
-import com.gmail.ssoch.healthcheck.utils.GlucoseLevelChartData;
-import com.gmail.ssoch.healthcheck.utils.PulseChartData;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.List;
@@ -31,43 +40,42 @@ public class Statistic extends AppCompatActivity {
     private HealthCheckDataDaoFile healthCheckDataDao;
     private TabLayout tabLayout;
     private LineChart chart;
-    private String statBeginDate = "2020-02-25";
-    private String statEndDate = "2020-03-21";
+    private Range<String> statisticRange = new Range<>("2020-02-25", "2020-03-21");
 
     private TabLayout.OnTabSelectedListener tabSelectedListener = new TabLayout.OnTabSelectedListener() {
         @Override
         public void onTabSelected(TabLayout.Tab tab) {
             try {
-                tab.parent.setTabRippleColor(ColorStateList.valueOf(Statistic.this.getResources().getColor(R.color.colorAccent, null)));
-
                 if (tab.getPosition() == BLOOD_PRESSURE.tabPosition) {
-                    BloodPressureChartData bloodPressureChartData = new BloodPressureChartData(healthCheckDataDao, statBeginDate, statEndDate);
-                    bloodPressureChartData.prepareData();
-
-                    prepareChart(bloodPressureChartData.getChartData(), bloodPressureChartData.getXLabels());
+                    StatisticData statisticData = new BloodPressureStatisticData(healthCheckDataDao, statisticRange);
+                    ChartDataGenerator chartDataGenerator = new BloodPressureChartDataGenerator(statisticData);
+                    chartDataGenerator.prepareData();
+                    prepareChart(chartDataGenerator.getChartData(), chartDataGenerator.getXLabels());
 
                 } else if (tab.getPosition() == PULSE.tabPosition) {
-                    PulseChartData pulseChartData = new PulseChartData(healthCheckDataDao, statBeginDate, statEndDate);
-                    pulseChartData.prepareData();
-
-                    prepareChart(pulseChartData.getChartData(), pulseChartData.getXLabels());
+                    StatisticData statisticData = new PulseStatisticData(healthCheckDataDao, statisticRange);
+                    ChartDataGenerator chartDataGenerator = new PulseChartDataGenerator(statisticData);
+                    chartDataGenerator.prepareData();
+                    prepareChart(chartDataGenerator.getChartData(), chartDataGenerator.getXLabels());
 
                 } else if (tab.getPosition() == BODY_WEIGHT.tabPosition) {
-                    BodyWeightChartData bodyWeightChartData = new BodyWeightChartData(healthCheckDataDao, statBeginDate, statEndDate);
-                    bodyWeightChartData.prepareData();
-
-                    prepareChart(bodyWeightChartData.getChartData(), bodyWeightChartData.getXLabels());
+                    StatisticData statisticData = new BodyWeightStatisticData(healthCheckDataDao, statisticRange);
+                    ChartDataGenerator chartDataGenerator = new BodyWeightChartDataGenerator(statisticData);
+                    chartDataGenerator.prepareData();
+                    prepareChart(chartDataGenerator.getChartData(), chartDataGenerator.getXLabels());
 
                 } else if (tab.getPosition() == GLUCOSE_LEVEL.tabPosition) {
-                    GlucoseLevelChartData glucoseLevelChartData = new GlucoseLevelChartData(healthCheckDataDao, statBeginDate, statEndDate);
-                    glucoseLevelChartData.prepareData();
-
-                    prepareChart(glucoseLevelChartData.getChartData(), glucoseLevelChartData.getXLabels());
+                    StatisticData statisticData = new GlucoseLevelStatisticData(healthCheckDataDao, statisticRange);
+                    ChartDataGenerator chartDataGenerator = new GlucoseLevelChartDataGenerator(statisticData);
+                    chartDataGenerator.prepareData();
+                    prepareChart(chartDataGenerator.getChartData(), chartDataGenerator.getXLabels());
 
                 } else {
+                    prepareChart(null, null);
                     Toast.makeText(Statistic.this, "Category wasn't found", Toast.LENGTH_SHORT).show();
                 }
             } catch (Exception e) {
+                prepareChart(null, null);
                 Toast.makeText(Statistic.this, "Something went wrong, we can not show statistics", Toast.LENGTH_SHORT).show();
             }
         }
@@ -83,12 +91,14 @@ public class Statistic extends AppCompatActivity {
         }
     };
 
-    private void aaa() throws Exception {
-        BloodPressureChartData bloodPressureChartData = new BloodPressureChartData(healthCheckDataDao, statBeginDate, statEndDate);
-        bloodPressureChartData.prepareData();
-
-        prepareChart(bloodPressureChartData.getChartData(), bloodPressureChartData.getXLabels());
-    }
+    private Button cancelBtn;
+    private Button.OnClickListener cancelBtnListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(Statistic.this, MainActivity.class);
+            startActivity(intent);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,16 +108,18 @@ public class Statistic extends AppCompatActivity {
         healthCheckDataDao = new HealthCheckDataDaoFile(this);
 
         tabLayout = findViewById(R.id.statistic_tabs);
-        tabLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary, null));
         tabLayout.addOnTabSelectedListener(tabSelectedListener);
+        configureTabLayoutView();
 
         chart = findViewById(R.id.statistic_chart);
+
+        cancelBtn = findViewById(R.id.statistic_cancel_Btn);
+        cancelBtn.setOnClickListener(cancelBtnListener);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        tabLayout.getTabAt(0).select();
+    private void configureTabLayoutView() {
+        tabLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary, null));
+        tabLayout.setTabRippleColor(ColorStateList.valueOf(this.getResources().getColor(R.color.colorAccent, null)));
     }
 
     private void prepareChart(LineData linedata, List<String> xLabels) {
@@ -127,6 +139,12 @@ public class Statistic extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        tabLayout.getTabAt(0).select();
+    }
+
     enum TAB_ITEM {
         BLOOD_PRESSURE(0),
         PULSE(1),
@@ -135,7 +153,7 @@ public class Statistic extends AppCompatActivity {
 
         int tabPosition;
 
-        private TAB_ITEM(int tabPosition) {
+        TAB_ITEM(int tabPosition) {
             this.tabPosition = tabPosition;
         }
     }

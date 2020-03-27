@@ -12,7 +12,7 @@
         <activity android:name=".BodyWeight"></activity>
         <activity android:name=".Statistic" />
         <activity android:name=".GlucoseLevel" />
-        <activity android:name=".BloodPressure" />
+        <activity android:name=".BloodPressureAndPulse" />
         <activity android:name=".Settings" />
         <activity android:name=".MainActivity">
             <intent-filter>

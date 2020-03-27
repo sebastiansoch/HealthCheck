@@ -1,26 +1,20 @@
-package com.gmail.ssoch.healthcheck.utils;
+package com.gmail.ssoch.healthcheck.chart;
 
 import android.graphics.Color;
-import android.util.Range;
 
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.gmail.ssoch.healthcheck.dao.data.BloodPressureData;
 import com.gmail.ssoch.healthcheck.dao.data.BloodPressureNorm;
-import com.gmail.ssoch.healthcheck.dao.file.HealthCheckDataDaoFile;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BloodPressureChartData {
-
-
-    private final HealthCheckDataDaoFile healthCheckDataDao;
-    private final String statBeginDate;
-    private final String statEndDate;
+public class BloodPressureChartDataGenerator implements ChartDataGenerator {
+    private final StatisticData statisticData;
     private final List<String> xLabels = new ArrayList<>();
+
     private LineDataSet systolicNormMinDataSet;
     private LineDataSet systolicNormMaxDataSet;
     private LineDataSet diastolicNormMinDataSet;
@@ -28,15 +22,14 @@ public class BloodPressureChartData {
     private LineDataSet systolicDataSet;
     private LineDataSet diastolicDataSet;
 
-    public BloodPressureChartData(HealthCheckDataDaoFile healthCheckDataDao, String statBeginDate, String statEndDate) {
-        this.healthCheckDataDao = healthCheckDataDao;
-        this.statBeginDate = statBeginDate;
-        this.statEndDate = statEndDate;
+    public BloodPressureChartDataGenerator(StatisticData statisticData) {
+        this.statisticData = statisticData;
     }
 
+    @Override
     public void prepareData() throws Exception {
-        List<BloodPressureData> dataToShow = getDataToShow();
-        List<BloodPressureNorm> norms = getNorms();
+        List<BloodPressureData> dataToShow = statisticData.getDataToShow();
+        List<BloodPressureNorm> norms = statisticData.getNorms();
 
         int systolicNormMin = 0;
         int systolicNormMax = 0;
@@ -107,18 +100,12 @@ public class BloodPressureChartData {
         diastolicDataSet.setLineWidth(3);
     }
 
-    private List<BloodPressureData> getDataToShow() throws IOException {
-        return healthCheckDataDao.getBloodPressureInRange(new Range<>(statBeginDate, statEndDate));
-    }
-
-    private List<BloodPressureNorm> getNorms() throws Exception {
-        return healthCheckDataDao.getBloodPressureNorms();
-    }
-
+    @Override
     public List<String> getXLabels() {
         return xLabels;
     }
 
+    @Override
     public LineData getChartData() {
         return new LineData(systolicDataSet, systolicNormMinDataSet, systolicNormMaxDataSet,
                 diastolicDataSet, diastolicNormMinDataSet, diastolicNormMaxDataSet);

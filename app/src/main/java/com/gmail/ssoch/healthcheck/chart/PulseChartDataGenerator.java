@@ -1,39 +1,33 @@
-package com.gmail.ssoch.healthcheck.utils;
+package com.gmail.ssoch.healthcheck.chart;
 
 import android.graphics.Color;
-import android.util.Range;
 
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.gmail.ssoch.healthcheck.dao.data.BloodPressureData;
+import com.gmail.ssoch.healthcheck.dao.data.PulseData;
 import com.gmail.ssoch.healthcheck.dao.data.PulseNorm;
-import com.gmail.ssoch.healthcheck.dao.file.HealthCheckDataDaoFile;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PulseChartData {
-    private final HealthCheckDataDaoFile healthCheckDataDao;
-    private final String statBeginDate;
-    private final String statEndDate;
+public class PulseChartDataGenerator implements ChartDataGenerator {
+    private final StatisticData statisticData;
+    private List<String> xLabels = new ArrayList<>();
 
     private LineDataSet normMinDataSet;
     private LineDataSet normMaxDataSet;
     private LineDataSet normDataSet;
 
-    private List<String> xLabels = new ArrayList<>();
+    public PulseChartDataGenerator(StatisticData statisticData) {
 
-    public PulseChartData(HealthCheckDataDaoFile healthCheckDataDao, String statBeginDate, String statEndDate) {
-        this.healthCheckDataDao = healthCheckDataDao;
-        this.statBeginDate = statBeginDate;
-        this.statEndDate = statEndDate;
+        this.statisticData = statisticData;
     }
 
+    @Override
     public void prepareData() throws Exception {
-        List<BloodPressureData> dataToShow = getDataToShow();
-        List<PulseNorm> norms = getNorms();
+        List<PulseData> dataToShow = statisticData.getDataToShow();
+        List<PulseNorm> norms = statisticData.getNorms();
 
         int normMin = 0;
         int normMax = 0;
@@ -77,18 +71,12 @@ public class PulseChartData {
         normDataSet.setLineWidth(3);
     }
 
-    private List<BloodPressureData> getDataToShow() throws IOException {
-        return healthCheckDataDao.getBloodPressureInRange(new Range<>(statBeginDate, statEndDate));
-    }
-
-    private List<PulseNorm> getNorms() throws Exception {
-        return healthCheckDataDao.getPulseNorms();
-    }
-
+    @Override
     public List<String> getXLabels() {
         return xLabels;
     }
 
+    @Override
     public LineData getChartData() {
         return new LineData(normDataSet, normMinDataSet, normMaxDataSet);
     }
