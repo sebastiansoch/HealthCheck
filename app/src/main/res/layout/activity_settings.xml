@@ -46,4 +46,13 @@
         app:layout_constraintStart_toEndOf="@id/settings_sync_Btn"
         app:layout_constraintBottom_toBottomOf="@id/settings_sync_Btn" />
 
+    <Button
+        android:id="@+id/settings_cancel_Btn"
+        style="@style/Button"
+        android:layout_marginBottom="12dp"
+        android:text="@string/exit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
