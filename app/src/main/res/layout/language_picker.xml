@@ -43,13 +43,13 @@
             android:id="@+id/language_cancel_Btn"
             style="@style/DialogFragmentButton"
             android:layout_marginEnd="12dp"
-            android:text="@string/exit" />
+            android:text="@string/language_cancel" />
 
         <Button
             android:id="@+id/language_save_Btn"
             style="@style/DialogFragmentButton"
             android:layout_marginEnd="12dp"
-            android:text="@string/save" />
+            android:text="@string/language_ok" />
 
     </LinearLayout>
 </LinearLayout>
