@@ -19,4 +19,6 @@
     <string name="statistic_pulse">Pulse</string>
     <string name="statistic_body_weight">Body Weight</string>
     <string name="statistic_glucose_level">Glucose Level</string>
+    <string name="language_cancel">Cancel</string>
+    <string name="language_ok">OK</string>
 </resources>

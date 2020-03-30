@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Kontrola stanu zdrowia</string>
+    <string name="main_blood_pressure">Ciśnienie krwi</string>
+    <string name="main_body_weight">Masa ciała</string>
+    <string name="main_glucose_level">Poziom cukru</string>
+    <string name="main_statistic">Statystyki</string>
+    <string name="settings">Ustawienia</string>
+    <string name="settings_change_language">Zmień język</string>
+    <string name="settings_sync_data">Synchronizuj, Zapisz dane</string>
+    <string name="blood_pressure_systolic">Skurczowe (mm Hg)</string>
+    <string name="blood_pressure_diastolic">Rozkurczowe (mm Hg)</string>
+    <string name="blood_pressure_pulse">Puls (bpm)</string>
+    <string name="save">Zapisz</string>
+    <string name="exit">Wyjdź</string>
+    <string name="glucose_level_mmol">Poziom cukru (mmol/l)</string>
+    <string name="glucose_level_mg">Poziom cukru (mg/dl)</string>
+    <string name="body_weight">Masa ciała (kg)</string>
+    <string name="statistic_blood_pressure">Ciśnienie krwi</string>
+    <string name="statistic_pulse">Puls</string>
+    <string name="statistic_body_weight">Masa ciała</string>
+    <string name="statistic_glucose_level">Poziom cukru</string>
+    <string name="language_cancel">Anuluj</string>
+    <string name="language_ok">Zatwierdź</string>
+</resources>
