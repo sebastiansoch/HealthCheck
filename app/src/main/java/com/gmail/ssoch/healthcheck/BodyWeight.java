@@ -1,6 +1,7 @@
 package com.gmail.ssoch.healthcheck;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -45,6 +46,7 @@ public class BodyWeight extends AppCompatActivity {
             try {
                 parseAndSaveData();
                 compareResultsWithNorm();
+                saveAsStartData();
             } catch (Exception ex) {
                 Toast.makeText(v.getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
             }
@@ -85,6 +87,13 @@ public class BodyWeight extends AppCompatActivity {
         Toast.makeText(this, validator.getResultDescription().toString(), Toast.LENGTH_SHORT).show();
     }
 
+    private void saveAsStartData() {
+        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putFloat("Body Weight", Float.parseFloat(bodyWeightET.getText().toString()));
+        editor.commit();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,5 +111,13 @@ public class BodyWeight extends AppCompatActivity {
 
         cancelBtn = findViewById(R.id.body_weight_cancel_Btn);
         cancelBtn.setOnClickListener(cancelBtnListener);
+
+        fillEditTextWithStartData();
+    }
+
+
+    private void fillEditTextWithStartData() {
+        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+        bodyWeightET.setText(Float.toString(preferences.getFloat("Body Weight", 0F)));
     }
 }

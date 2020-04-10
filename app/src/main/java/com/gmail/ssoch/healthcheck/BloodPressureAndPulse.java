@@ -1,6 +1,7 @@
 package com.gmail.ssoch.healthcheck;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,8 +17,8 @@ import com.gmail.ssoch.healthcheck.dao.HealthCheckDataDao;
 import com.gmail.ssoch.healthcheck.dao.data.BloodPressureData;
 import com.gmail.ssoch.healthcheck.dao.data.PulseData;
 import com.gmail.ssoch.healthcheck.dao.file.HealthCheckDataDaoFile;
-import com.gmail.ssoch.healthcheck.utils.DataParser;
 import com.gmail.ssoch.healthcheck.utils.BloodPressureValidator;
+import com.gmail.ssoch.healthcheck.utils.DataParser;
 import com.gmail.ssoch.healthcheck.utils.PulseValidator;
 
 import java.text.SimpleDateFormat;
@@ -51,6 +52,7 @@ public class BloodPressureAndPulse extends AppCompatActivity {
             try {
                 parseAndSaveData();
                 compareResultsWithNorm();
+                saveAsStartData();
             } catch (Exception ex) {
                 Toast.makeText(v.getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
             }
@@ -100,6 +102,16 @@ public class BloodPressureAndPulse extends AppCompatActivity {
         Toast.makeText(this, validatorP.getResultDescription().toString(), Toast.LENGTH_SHORT).show();
     }
 
+    private void saveAsStartData() {
+        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt("Systolic", Integer.parseInt(systolicET.getText().toString()));
+        editor.putInt("Diastolic", Integer.parseInt(diastolicET.getText().toString()));
+        editor.putInt("Pulse", Integer.parseInt(pulseET.getText().toString()));
+        editor.commit();
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,5 +131,14 @@ public class BloodPressureAndPulse extends AppCompatActivity {
 
         cancelBtn = findViewById(R.id.blood_pressure_cancel_Btn);
         cancelBtn.setOnClickListener(cancelBtnListener);
+
+        fillEditTextWithStartData();
+    }
+
+    private void fillEditTextWithStartData() {
+        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+        systolicET.setText(Integer.toString(preferences.getInt("Systolic", 0)));
+        diastolicET.setText(Integer.toString(preferences.getInt("Diastolic", 0)));
+        pulseET.setText(Integer.toString(preferences.getInt("Pulse", 0)));
     }
 }

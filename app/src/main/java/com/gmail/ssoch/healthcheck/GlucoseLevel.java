@@ -1,6 +1,7 @@
 package com.gmail.ssoch.healthcheck;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -96,6 +97,7 @@ public class GlucoseLevel extends AppCompatActivity {
             try {
                 parseAndSaveData();
                 compareResultsWithNorm();
+                saveAsStartData();
             } catch (Exception ex) {
                 Toast.makeText(v.getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
             }
@@ -138,6 +140,14 @@ public class GlucoseLevel extends AppCompatActivity {
         Toast.makeText(this, validator.getResultDescription().toString(), Toast.LENGTH_SHORT).show();
     }
 
+    private void saveAsStartData() {
+        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putFloat("GlucoseLevel Mmol", Float.parseFloat(glucoseLevelMmolET.getText().toString()));
+        editor.putInt("GlucoseLevel Mg", Integer.parseInt(glucoseLevelMgET.getText().toString()));
+        editor.commit();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -159,5 +169,14 @@ public class GlucoseLevel extends AppCompatActivity {
 
         cancelBtn = findViewById(R.id.glucose_level_cancel_Btn);
         cancelBtn.setOnClickListener(cancelBtnListener);
+
+        fillEditTextWithStartData();
+    }
+
+    private void fillEditTextWithStartData() {
+        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+        glucoseLevelMmolET.setText(Float.toString(preferences.getFloat("GlucoseLevel Mmol", 0)));
+        glucoseLevelMgET.setText(Integer.toString(preferences.getInt("GlucoseLevel Mg", 0)));
+        glucoseLevelMmolET.callOnClick();
     }
 }
