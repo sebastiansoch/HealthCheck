@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/user_data_layout"
+    tools:context=".UserData">
+
+    <TextView
+        android:id="@+id/user_data_gender_Lbl"
+        style="@style/TextViewNumberLbl"
+        android:layout_marginEnd="16dp"
+        android:text="@string/user_data_gender"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/divider"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.2" />
+
+    <TextView
+        android:id="@+id/user_data_height_Lbl"
+        style="@style/TextViewNumberLbl"
+        android:layout_marginTop="24dp"
+        android:text="@string/user_data_height"
+        app:layout_constraintEnd_toEndOf="@+id/user_data_gender_Lbl"
+        app:layout_constraintTop_toBottomOf="@id/user_data_gender_Lbl" />
+
+    <TextView
+        android:id="@+id/user_data_date_of_birth_Lbl"
+        style="@style/TextViewNumberLbl"
+        android:layout_marginTop="24dp"
+        android:text="@string/user_data_date_of_birth"
+        app:layout_constraintEnd_toEndOf="@+id/user_data_gender_Lbl"
+        app:layout_constraintTop_toBottomOf="@id/user_data_height_Lbl" />
+
+    <Button
+        android:id="@+id/user_data_save_Btn"
+        style="@style/Button"
+        android:text="@string/save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.8" />
+
+    <Button
+        android:id="@+id/user_data_cancel_Btn"
+        style="@style/Button"
+        android:layout_marginEnd="12dp"
+        android:text="@string/exit"
+        app:layout_constraintEnd_toStartOf="@id/user_data_save_Btn"
+        app:layout_constraintTop_toTopOf="@id/user_data_save_Btn" />
+
+    <Spinner
+        android:id="@+id/user_data_gender_spinner"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/user_data_gender_Lbl"
+        app:layout_constraintStart_toEndOf="@+id/divider"
+        app:layout_constraintTop_toTopOf="@+id/user_data_gender_Lbl" />
+
+    <EditText
+        android:id="@+id/user_data_height_ET"
+        style="@style/EditTextDataUserNumberDecimal"
+        app:layout_constraintBottom_toBottomOf="@+id/user_data_height_Lbl"
+        app:layout_constraintStart_toEndOf="@+id/divider"
+        app:layout_constraintTop_toTopOf="@+id/user_data_height_Lbl" />
+
+    <TextView
+        android:id="@+id/user_data_date_of_birth_TV"
+        style="@style/TextViewDataUserDateOfBirth"
+        android:text="1990-01-01"
+        app:layout_constraintBottom_toBottomOf="@+id/user_data_date_of_birth_Lbl"
+        app:layout_constraintEnd_toEndOf="@+id/user_data_height_ET"
+        app:layout_constraintStart_toEndOf="@+id/divider"
+        app:layout_constraintTop_toTopOf="@+id/user_data_date_of_birth_Lbl" />
+
+    <ImageButton
+        android:id="@+id/user_data_date_of_birth_Btn"
+        style="@style/Calendar"
+        android:layout_marginLeft="8dp"
+        android:src="@drawable/ic_stat_calendar"
+        app:layout_constraintBottom_toBottomOf="@id/user_data_date_of_birth_TV"
+        app:layout_constraintStart_toEndOf="@id/user_data_date_of_birth_TV"
+        app:layout_constraintTop_toTopOf="@id/user_data_date_of_birth_TV" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.3"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

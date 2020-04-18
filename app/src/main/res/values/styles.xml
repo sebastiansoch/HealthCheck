@@ -39,6 +39,31 @@
         <item name="android:layout_marginTop">8dp</item>
     </style>
 
+    <style name="EditTextDataUserNumberDecimal">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/background_image_button</item>
+        <item name="android:ems">6</item>
+        <item name="android:inputType">numberDecimal</item>
+        <item name="android:maxLength">5</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginLeft">32dp</item>
+    </style>
+
+    <style name="TextViewDataUserDateOfBirth">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/background_image_button</item>
+        <item name="android:inputType">date</item>
+        <item name="android:hint">2000-01-01</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginLeft">32dp</item>
+    </style>
+
     <style name="TextViewNumberLbl">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

@@ -6,6 +6,7 @@
     <string name="main_glucose_level">Poziom cukru</string>
     <string name="main_statistic">Statystyki</string>
     <string name="settings">Ustawienia</string>
+    <string name="settings_user_data">Dane użytkownika</string>
     <string name="settings_change_language">Zmień język</string>
     <string name="settings_sync_data">Synchronizuj, Zapisz dane</string>
     <string name="blood_pressure_systolic">Skurczowe (mm Hg)</string>
@@ -22,4 +23,7 @@
     <string name="statistic_glucose_level">Poziom cukru</string>
     <string name="language_cancel">Anuluj</string>
     <string name="language_ok">Zatwierdź</string>
+    <string name="user_data_gender">Gender</string>
+    <string name="user_data_height">Wzrost</string>
+    <string name="user_data_date_of_birth">Data urodzenia</string>
 </resources>
