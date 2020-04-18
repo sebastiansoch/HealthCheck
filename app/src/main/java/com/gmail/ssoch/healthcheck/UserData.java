@@ -111,6 +111,7 @@ public class UserData extends AppCompatActivity {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt("Height", Integer.parseInt(heightET.getText().toString()));
         editor.putString("Date Of Birth", dateOfBirthTV.getText().toString());
+        editor.putInt("Gender", genderSpinner.getSelectedItemPosition());
         editor.commit();
     }
 
@@ -147,5 +148,6 @@ public class UserData extends AppCompatActivity {
         SharedPreferences preferences = getPreferences(MODE_PRIVATE);
         heightET.setText(Integer.toString(preferences.getInt("Height", 0)));
         dateOfBirthTV.setText(preferences.getString("Date Of Birth", "1990-01-01"));
+        genderSpinner.setSelection(preferences.getInt("Gender", 0));
     }
 }
