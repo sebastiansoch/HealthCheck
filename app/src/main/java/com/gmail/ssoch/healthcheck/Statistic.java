@@ -247,7 +247,10 @@ public class Statistic extends AppCompatActivity {
         chart.getXAxis().setValueFormatter(new ValueFormatter() {
             @Override
             public String getAxisLabel(float value, AxisBase axis) {
-                return xLabels.get((int) value);
+                if (xLabels.size() >= value) {
+                    return xLabels.get((int) value);
+                }
+                return String.valueOf(xLabels.size());
             }
         });
     }
