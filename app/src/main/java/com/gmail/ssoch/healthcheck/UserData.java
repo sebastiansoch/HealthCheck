@@ -17,11 +17,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.gmail.ssoch.healthcheck.dao.file.HealthCheckDataDaoFile;
+import com.gmail.ssoch.healthcheck.dao.data.UserPersonalData;
+import com.gmail.ssoch.healthcheck.utils.DataParser;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -38,7 +39,20 @@ public class UserData extends BaseActivity {
         }
     };
 
+
     private Spinner genderSpinner;
+    private AdapterView.OnItemSelectedListener genderItemSelectedListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            parent.getSelectedItem();
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
+
     private EditText heightET;
 
     private TextView dateOfBirthTV;
@@ -75,11 +89,14 @@ public class UserData extends BaseActivity {
         }
     };
 
+    private UserPersonalData userPersonalData;
+
     private Button saveBtn;
     private Button.OnClickListener saveBtnListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             try {
+                parseAndSaveData();
                 saveAsStartData();
             } catch (Exception ex) {
                 Toast.makeText(v.getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
@@ -96,17 +113,28 @@ public class UserData extends BaseActivity {
         }
     };
 
-    private AdapterView.OnItemSelectedListener genderItemSelectedListener = new AdapterView.OnItemSelectedListener() {
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            parent.getSelectedItem();
+
+    private void parseAndSaveData() throws ParseException, IOException {
+        int genderID = genderSpinner.getSelectedItemPosition();
+        String height = heightET.getText().toString();
+        String dateOfBirth = dateOfBirthTV.getText().toString();
+
+        DataParser.parseUserData(genderID, height, dateOfBirth);
+
+        String gender;
+        if (genderID == 0) {
+            gender = "male";
+        } else {
+            gender = "female";
         }
 
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {
+        saveData(gender, height, dateOfBirth);
+    }
 
-        }
-    };
+    private void saveData(String gender, String height, String dateOfBirth) throws IOException {
+        userPersonalData = new UserPersonalData(gender, height, dateOfBirth);
+        healthCheckDataDao.saveUserPersonalData(userPersonalData);
+    }
 
     private void saveAsStartData() {
         SharedPreferences preferences = getPreferences(MODE_PRIVATE);

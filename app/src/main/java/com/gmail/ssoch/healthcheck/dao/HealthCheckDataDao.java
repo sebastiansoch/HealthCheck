@@ -10,7 +10,9 @@ import com.gmail.ssoch.healthcheck.dao.data.GlucoseLevelData;
 import com.gmail.ssoch.healthcheck.dao.data.GlucoseLevelNorm;
 import com.gmail.ssoch.healthcheck.dao.data.PulseData;
 import com.gmail.ssoch.healthcheck.dao.data.PulseNorm;
+import com.gmail.ssoch.healthcheck.dao.data.UserPersonalData;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -22,6 +24,8 @@ public interface HealthCheckDataDao {
     void saveBodyWeight(BodyWeightData bodyWeight) throws Exception;
 
     void saveGlucoseLevel(GlucoseLevelData glucoseLevel) throws Exception;
+
+    void saveUserPersonalData(UserPersonalData userPersonalData) throws IOException;
 
     List<BloodPressureNorm> getBloodPressureNorms() throws Exception;
 
@@ -39,4 +43,5 @@ public interface HealthCheckDataDao {
 
     List<GlucoseLevelData> getGlucoseLevelInRange(Range<String> stringRange) throws IOException;
 
+    UserPersonalData getUserPersonalData() throws IOException;
 }

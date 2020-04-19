@@ -1,6 +1,8 @@
 package com.gmail.ssoch.healthcheck.utils;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class DataParser {
     public static void parseBloodPressureData(String systolic, String diastolic) throws ParseException {
@@ -38,4 +40,29 @@ public class DataParser {
         }
     }
 
+    public static void parseUserData(int genderID, String height, String dateOfBirth) throws ParseException {
+        if (genderID < 0) {
+            throw new ParseException("Gender is set incorrectly", 0);
+        }
+
+        if (height == null || height.isEmpty()) {
+            throw new ParseException("Height is not set or set incorrectly", 0);
+        }
+
+        if (dateOfBirth == null || dateOfBirth.isEmpty()) {
+            throw new ParseException("Date of birth is not set or set incorrectly", 0);
+        }
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date now = new Date();
+        Date dob = format.parse(dateOfBirth);
+        if (dob.after(now)) {
+            throw new ParseException("Date of birth is set incorrectly", 0);
+        }
+
+        Date oldestDate = format.parse("1900-01-01");
+        if (dob.before(oldestDate)) {
+            throw new ParseException("Date of birth is set incorrectly", 0);
+        }
+    }
 }

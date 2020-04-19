@@ -13,6 +13,7 @@ import com.gmail.ssoch.healthcheck.dao.data.GlucoseLevelData;
 import com.gmail.ssoch.healthcheck.dao.data.GlucoseLevelNorm;
 import com.gmail.ssoch.healthcheck.dao.data.PulseData;
 import com.gmail.ssoch.healthcheck.dao.data.PulseNorm;
+import com.gmail.ssoch.healthcheck.dao.data.UserPersonalData;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -29,6 +30,7 @@ public class HealthCheckDataDaoFile implements HealthCheckDataDao {
     private final String FILE_PULSE = "hc_pulse.txt";
     private final String FILE_BODY_WEIGHT = "hc_body_weight.txt";
     private final String FILE_GLUCOSE_LEVEL = "hc_glucose_level.txt";
+    private final String FILE_USER_PERSONAL_DATA = "hc_user_personal_data.txt";
 
     public HealthCheckDataDaoFile(Context appContext) {
         this.appContext = appContext;
@@ -118,6 +120,23 @@ public class HealthCheckDataDaoFile implements HealthCheckDataDao {
         return builder.toString();
     }
 
+    @Override
+    public void saveUserPersonalData(UserPersonalData userPersonalData) throws IOException {
+        AppendDataToFile appendDataToFile = new AppendDataToFile(appContext, FILE_USER_PERSONAL_DATA);
+        String data = getParsedUserPersonalData(userPersonalData);
+        appendDataToFile.save(data);
+    }
+
+    private String getParsedUserPersonalData(UserPersonalData userPersonalData) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(userPersonalData.getGender());
+        builder.append("|");
+        builder.append(userPersonalData.getDateOfBirth());
+        builder.append("|");
+        builder.append(userPersonalData.getHeight());
+        builder.append("\n");
+        return builder.toString();
+    }
 
     @Override
     public List<BloodPressureNorm> getBloodPressureNorms() throws Exception {
@@ -262,6 +281,21 @@ public class HealthCheckDataDaoFile implements HealthCheckDataDao {
         }
 
         return glucoseLevelData;
+    }
+
+    @Override
+    public UserPersonalData getUserPersonalData() throws IOException {
+        FileInputStream fileInputStream = appContext.openFileInput(FILE_USER_PERSONAL_DATA);
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
+
+        UserPersonalData userPersonalData = new UserPersonalData("", "", "");
+        String readLine = null;
+        if ((readLine = bufferedReader.readLine()) != null) {
+            String[] split = readLine.split("\\|");
+            userPersonalData = new UserPersonalData(split[0], split[2], split[1]);
+        }
+
+        return userPersonalData;
     }
 
 
