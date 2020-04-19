@@ -24,9 +24,7 @@ import com.gmail.ssoch.healthcheck.utils.GlucoseLevelValidator;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class GlucoseLevel extends AppCompatActivity {
-
-    private HealthCheckDataDao healthCheckDataDao;
+public class GlucoseLevel extends BaseActivity {
 
     private ConstraintLayout layout;
     private ConstraintLayout.OnTouchListener layoutOnTouchListener = new View.OnTouchListener() {
@@ -152,8 +150,6 @@ public class GlucoseLevel extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_glucose_level);
-
-        healthCheckDataDao = new HealthCheckDataDaoFile(getApplicationContext());
 
         layout = findViewById(R.id.glucose_level_layout);
         layout.setOnTouchListener(layoutOnTouchListener);

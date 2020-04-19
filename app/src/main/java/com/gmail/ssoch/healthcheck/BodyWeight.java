@@ -22,9 +22,7 @@ import com.gmail.ssoch.healthcheck.utils.DataParser;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class BodyWeight extends AppCompatActivity {
-
-    private HealthCheckDataDao healthCheckDataDao;
+public class BodyWeight extends BaseActivity {
 
     private ConstraintLayout layout;
     private ConstraintLayout.OnTouchListener layoutOnTouchListener = new View.OnTouchListener() {
@@ -98,8 +96,6 @@ public class BodyWeight extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_body_weight);
-
-        healthCheckDataDao = new HealthCheckDataDaoFile(getApplicationContext());
 
         layout = findViewById(R.id.body_weight_layout);
         layout.setOnTouchListener(layoutOnTouchListener);

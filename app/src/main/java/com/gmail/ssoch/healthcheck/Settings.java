@@ -6,10 +6,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
-import androidx.appcompat.app.AppCompatActivity;
+public class Settings extends BaseActivity {
 
-public class Settings extends AppCompatActivity {
-
+    Button.OnClickListener cancelBtnListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(Settings.this, MainActivity.class);
+            startActivity(intent);
+        }
+    };
     private ImageButton dataUserBtn;
     private ImageButton.OnClickListener dataUserBtnListener = new View.OnClickListener() {
         @Override
@@ -18,7 +23,6 @@ public class Settings extends AppCompatActivity {
             startActivity(intent);
         }
     };
-
     private ImageButton languageBtn;
     private ImageButton.OnClickListener languageBtnListener = new View.OnClickListener() {
         @Override
@@ -28,16 +32,7 @@ public class Settings extends AppCompatActivity {
 
         }
     };
-
-
     private Button cancelBtn;
-    Button.OnClickListener cancelBtnListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(Settings.this, MainActivity.class);
-            startActivity(intent);
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

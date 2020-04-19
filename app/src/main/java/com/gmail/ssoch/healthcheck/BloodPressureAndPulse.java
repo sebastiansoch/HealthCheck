@@ -10,13 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.gmail.ssoch.healthcheck.dao.HealthCheckDataDao;
 import com.gmail.ssoch.healthcheck.dao.data.BloodPressureData;
 import com.gmail.ssoch.healthcheck.dao.data.PulseData;
-import com.gmail.ssoch.healthcheck.dao.file.HealthCheckDataDaoFile;
 import com.gmail.ssoch.healthcheck.utils.BloodPressureValidator;
 import com.gmail.ssoch.healthcheck.utils.DataParser;
 import com.gmail.ssoch.healthcheck.utils.PulseValidator;
@@ -24,9 +21,7 @@ import com.gmail.ssoch.healthcheck.utils.PulseValidator;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class BloodPressureAndPulse extends AppCompatActivity {
-
-    private HealthCheckDataDao healthCheckDataDao;
+public class BloodPressureAndPulse extends BaseActivity {
 
     private ConstraintLayout layout;
     private ConstraintLayout.OnTouchListener layoutOnTouchListener = new View.OnTouchListener() {
@@ -116,8 +111,6 @@ public class BloodPressureAndPulse extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blood_pressure_and_pulse);
-
-        healthCheckDataDao = new HealthCheckDataDaoFile(this);
 
         layout = findViewById(R.id.blood_pressure_layout);
         layout.setOnTouchListener(layoutOnTouchListener);

@@ -12,8 +12,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.data.LineData;
@@ -28,7 +26,6 @@ import com.gmail.ssoch.healthcheck.chart.GlucoseLevelStatisticData;
 import com.gmail.ssoch.healthcheck.chart.PulseChartDataGenerator;
 import com.gmail.ssoch.healthcheck.chart.PulseStatisticData;
 import com.gmail.ssoch.healthcheck.chart.StatisticData;
-import com.gmail.ssoch.healthcheck.dao.file.HealthCheckDataDaoFile;
 import com.google.android.material.tabs.TabLayout;
 
 import java.text.ParseException;
@@ -43,38 +40,14 @@ import static com.gmail.ssoch.healthcheck.Statistic.TAB_ITEM.GLUCOSE_LEVEL;
 import static com.gmail.ssoch.healthcheck.Statistic.TAB_ITEM.PULSE;
 
 
-public class Statistic extends AppCompatActivity {
+public class Statistic extends BaseActivity {
 
-    private HealthCheckDataDaoFile healthCheckDataDao;
     private TabLayout tabLayout;
     private LineChart chart;
     private Range<String> statisticRange;
 
     private TextView beginDateTV;
     private ImageButton beginDateBtn;
-    private DatePickerDialog.OnDateSetListener beginDatePickerDateSetListener = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            try {
-                Date date = dateFormat.parse(year + "-" + (month + 1) + "-" + dayOfMonth);
-                if (date.after(new Date())) {
-                    Toast.makeText(Statistic.this, "Begin date is not seated correctly", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                String sBeginDate = dateFormat.format(date);
-                beginDateTV.setText(sBeginDate);
-
-                String sEndDate = endDateTV.getText().toString();
-                statisticRange = Range.create(sBeginDate, sEndDate);
-
-                tabSelectedListener.onTabReselected(tabLayout.getTabAt(tabLayout.getSelectedTabPosition()));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-    };
     private ImageButton.OnClickListener beginDateBtnListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -84,38 +57,12 @@ public class Statistic extends AppCompatActivity {
             int day = Integer.parseInt(split[2]);
 
             DatePickerDialog datePickerDialog = new DatePickerDialog(Statistic.this, android.R.style.Theme_Material_Dialog_MinWidth,
-                      beginDatePickerDateSetListener, year, month, day);
+                    beginDatePickerDateSetListener, year, month, day);
             datePickerDialog.show();
         }
     };
-
     private TextView endDateTV;
     private ImageButton endDateBtn;
-    private DatePickerDialog.OnDateSetListener endDatePickerDateSetListener = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            try {
-                Date date = dateFormat.parse(year + "-" + (month + 1) + "-" + dayOfMonth);
-                Date beginDate = dateFormat.parse(beginDateTV.getText().toString());
-
-                if (date.before(beginDate)) {
-                    Toast.makeText(Statistic.this, "End date is not seated correctly", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                String sEndDate = dateFormat.format(date);
-                endDateTV.setText(sEndDate);
-
-                String sBeginDate = beginDateTV.getText().toString();
-                statisticRange = Range.create(sBeginDate, sEndDate);
-
-                tabSelectedListener.onTabReselected(tabLayout.getTabAt(tabLayout.getSelectedTabPosition()));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-    };
     private ImageButton.OnClickListener endDateBtnListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -129,7 +76,6 @@ public class Statistic extends AppCompatActivity {
             datePickerDialog.show();
         }
     };
-
     private TabLayout.OnTabSelectedListener tabSelectedListener = new TabLayout.OnTabSelectedListener() {
         @Override
         public void onTabSelected(TabLayout.Tab tab) {
@@ -178,7 +124,54 @@ public class Statistic extends AppCompatActivity {
             onTabSelected(tab);
         }
     };
+    private DatePickerDialog.OnDateSetListener beginDatePickerDateSetListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                Date date = dateFormat.parse(year + "-" + (month + 1) + "-" + dayOfMonth);
+                if (date.after(new Date())) {
+                    Toast.makeText(Statistic.this, "Begin date is not seated correctly", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
+                String sBeginDate = dateFormat.format(date);
+                beginDateTV.setText(sBeginDate);
+
+                String sEndDate = endDateTV.getText().toString();
+                statisticRange = Range.create(sBeginDate, sEndDate);
+
+                tabSelectedListener.onTabReselected(tabLayout.getTabAt(tabLayout.getSelectedTabPosition()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+    };
+    private DatePickerDialog.OnDateSetListener endDatePickerDateSetListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                Date date = dateFormat.parse(year + "-" + (month + 1) + "-" + dayOfMonth);
+                Date beginDate = dateFormat.parse(beginDateTV.getText().toString());
+
+                if (date.before(beginDate)) {
+                    Toast.makeText(Statistic.this, "End date is not seated correctly", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                String sEndDate = dateFormat.format(date);
+                endDateTV.setText(sEndDate);
+
+                String sBeginDate = beginDateTV.getText().toString();
+                statisticRange = Range.create(sBeginDate, sEndDate);
+
+                tabSelectedListener.onTabReselected(tabLayout.getTabAt(tabLayout.getSelectedTabPosition()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+    };
     private Button cancelBtn;
     private Button.OnClickListener cancelBtnListener = new View.OnClickListener() {
         @Override
@@ -192,8 +185,6 @@ public class Statistic extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistic);
-
-        healthCheckDataDao = new HealthCheckDataDaoFile(this);
 
         tabLayout = findViewById(R.id.statistic_tabs);
         tabLayout.addOnTabSelectedListener(tabSelectedListener);

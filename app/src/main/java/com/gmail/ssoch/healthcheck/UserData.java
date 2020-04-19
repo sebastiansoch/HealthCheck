@@ -20,11 +20,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.gmail.ssoch.healthcheck.dao.file.HealthCheckDataDaoFile;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class UserData extends AppCompatActivity {
+public class UserData extends BaseActivity {
 
     private ConstraintLayout layout;
     private ConstraintLayout.OnTouchListener layoutOnTouchListener = new View.OnTouchListener() {
