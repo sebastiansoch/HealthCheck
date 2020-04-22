@@ -45,8 +45,14 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
         }
     }
 
-    public int create(BloodPressureEntity bloodPressureEntity) throws SQLException {
-        Dao<BloodPressureEntity, Void> dao = (Dao<BloodPressureEntity, Void>) getDao(bloodPressureEntity.getClass());
-        return dao.create(bloodPressureEntity);
+    public <T> int create(T obj) throws SQLException {
+        Dao<T, ?> dao = (Dao<T, ?>) getDao(obj.getClass());
+        return dao.create(obj);
     }
+
+    public <T> int deleteById(T obj, Object id) throws SQLException {
+        Dao<T, Object> dao = (Dao<T, Object>) getDao(obj.getClass());
+        return dao.deleteById(id);
+    }
+
 }

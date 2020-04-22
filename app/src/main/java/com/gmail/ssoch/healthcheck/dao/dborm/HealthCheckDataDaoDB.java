@@ -32,12 +32,14 @@ public class HealthCheckDataDaoDB implements HealthCheckDataDao {
 
     @Override
     public void saveBloodPressure(BloodPressureData bloodPressure) throws Exception {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            BloodPressureEntity bloodPressureEntity = new BloodPressureEntity(
-                    Integer.parseInt(bloodPressure.getSystolic()),
-                    Integer.parseInt(bloodPressure.getDiastolic()),
-                    format.parse(bloodPressure.getMeasurementDate()));
-            dbHelper.create(bloodPressureEntity);
+//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+//            BloodPressureEntity bloodPressureEntity = new BloodPressureEntity(
+//                    Integer.parseInt(bloodPressure.getSystolic()),
+//                    Integer.parseInt(bloodPressure.getDiastolic()),
+//                    format.parse(bloodPressure.getMeasurementDate()));
+//            dbHelper.create(bloodPressureEntity);
+
+            dbHelper.deleteById(new BloodPressureEntity(), 4);
     }
 
     @Override
