@@ -23,7 +23,7 @@
     <string name="statistic_glucose_level">Poziom cukru</string>
     <string name="language_cancel">Anuluj</string>
     <string name="language_ok">Zatwierdź</string>
-    <string name="user_data_gender">Gender</string>
+    <string name="user_data_gender">Płeć</string>
     <string name="user_data_height">Wzrost</string>
     <string name="user_data_date_of_birth">Data urodzenia</string>
 </resources>
