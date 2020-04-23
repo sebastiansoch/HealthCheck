@@ -54,10 +54,19 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
     }
 
     private void createTablesWithNorms() throws SQLException {
+        HealthNorms norms = new HealthNorms(this);
+
         TableUtils.createTable(connectionSource, BloodPressureNormEntity.class);
+        norms.fillBloodPressureNormTable();
+
         TableUtils.createTable(connectionSource, PulseNormEntity.class);
+        norms.fillPulseNormTable();
+
         TableUtils.createTable(connectionSource, BodyWeightNormEntity.class);
+        norms.fillBodyWeightNormTable();
+
         TableUtils.createTable(connectionSource, GlucoseLevelNormEntity.class);
+        norms.fillGlucoseLevelNormTable();
     }
 
     @Override
@@ -70,12 +79,12 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
         }
     }
 
-    public <T> int create(T obj) throws SQLException {
+    <T> int create(T obj) throws SQLException {
         Dao<T, ?> dao = (Dao<T, ?>) getDao(obj.getClass());
         return dao.create(obj);
     }
 
-    public<T> List<T> findInRange(T obj, Range<Date> range) throws SQLException {
+    <T> List<T> findInRange(T obj, Range<Date> range) throws SQLException {
         Dao<T, ?> dao = (Dao<T, ?>) getDao(obj.getClass());
         QueryBuilder<T, ?> builder = dao.queryBuilder();
         Where<T, ?> where = builder.where();
@@ -83,12 +92,12 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
         return builder.query();
     }
 
-    public <T> List<T> findAll(T obj) throws SQLException {
+    <T> List<T> findAll(T obj) throws SQLException {
         Dao<T, ?> dao = (Dao<T, ?> ) getDao(obj.getClass());
         return dao.queryForAll();
     }
 
-    public <T> int deleteById(T obj, Object id) throws SQLException {
+    <T> int deleteById(T obj, Object id) throws SQLException {
         Dao<T, Object> dao = (Dao<T, Object>) getDao(obj.getClass());
         return dao.deleteById(id);
     }
