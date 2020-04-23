@@ -20,7 +20,7 @@ public class BodyWeightStatisticData implements StatisticData <BodyWeightData, B
     }
 
     @Override
-    public List<BodyWeightData> getDataToShow() throws IOException {
+    public List<BodyWeightData> getDataToShow() throws Exception {
         return healthCheckDataDao.getBodyWeighInRange(statisticRange);
     }
 

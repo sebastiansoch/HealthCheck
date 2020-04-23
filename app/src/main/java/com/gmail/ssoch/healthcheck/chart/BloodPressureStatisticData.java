@@ -19,7 +19,7 @@ public class BloodPressureStatisticData implements StatisticData <BloodPressureD
     }
 
     @Override
-    public List<BloodPressureData> getDataToShow() throws IOException {
+    public List<BloodPressureData> getDataToShow() throws Exception {
         return healthCheckDataDao.getBloodPressureInRange(statisticRange);
     }
 

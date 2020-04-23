@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface StatisticData<T, V> {
 
-    List<T> getDataToShow() throws IOException;
+    List<T> getDataToShow() throws Exception;
 
     List<V> getNorms() throws Exception;
 }

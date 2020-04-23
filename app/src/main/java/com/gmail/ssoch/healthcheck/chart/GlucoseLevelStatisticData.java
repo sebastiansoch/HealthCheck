@@ -19,7 +19,7 @@ public class GlucoseLevelStatisticData implements StatisticData<GlucoseLevelData
     }
 
     @Override
-    public List<GlucoseLevelData> getDataToShow() throws IOException {
+    public List<GlucoseLevelData> getDataToShow() throws Exception {
         return healthCheckDataDao.getGlucoseLevelInRange(statisticRange);
     }
 

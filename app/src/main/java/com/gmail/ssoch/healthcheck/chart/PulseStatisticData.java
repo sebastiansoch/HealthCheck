@@ -20,7 +20,7 @@ public class PulseStatisticData implements StatisticData<PulseData, PulseNorm> {
     }
 
     @Override
-    public List<PulseData> getDataToShow() throws IOException {
+    public List<PulseData> getDataToShow() throws Exception {
         return healthCheckDataDao.getPulseInRange(statisticRange);
     }
 

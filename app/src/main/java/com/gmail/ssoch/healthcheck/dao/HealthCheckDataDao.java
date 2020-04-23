@@ -14,6 +14,8 @@ import com.gmail.ssoch.healthcheck.dao.data.UserPersonalData;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
 
 public interface HealthCheckDataDao {
@@ -25,23 +27,23 @@ public interface HealthCheckDataDao {
 
     void saveGlucoseLevel(GlucoseLevelData glucoseLevel) throws Exception;
 
-    void saveUserPersonalData(UserPersonalData userPersonalData) throws IOException;
+    void saveUserPersonalData(UserPersonalData userPersonalData) throws Exception;
 
     List<BloodPressureNorm> getBloodPressureNorms() throws Exception;
 
     List<PulseNorm> getPulseNorms() throws Exception;
 
-    List<BodyWeightNorm> getBodyWeightNorms() throws IOException;
+    List<BodyWeightNorm> getBodyWeightNorms() throws Exception;
 
-    List<GlucoseLevelNorm> getGlucoseLevelNorms() throws IOException;
+    List<GlucoseLevelNorm> getGlucoseLevelNorms() throws Exception;
 
-    List<BloodPressureData> getBloodPressureInRange(Range<String> stringRange) throws IOException;
+    List<BloodPressureData> getBloodPressureInRange(Range<String> stringRange) throws Exception;
 
-    List<PulseData> getPulseInRange(Range<String> dataRange) throws IOException;
+    List<PulseData> getPulseInRange(Range<String> dataRange) throws Exception;
 
-    List<BodyWeightData> getBodyWeighInRange(Range<String> stringRange) throws IOException;
+    List<BodyWeightData> getBodyWeighInRange(Range<String> stringRange) throws Exception;
 
-    List<GlucoseLevelData> getGlucoseLevelInRange(Range<String> stringRange) throws IOException;
+    List<GlucoseLevelData> getGlucoseLevelInRange(Range<String> stringRange) throws Exception;
 
-    UserPersonalData getUserPersonalData() throws IOException;
+    UserPersonalData getUserPersonalData() throws Exception;
 }

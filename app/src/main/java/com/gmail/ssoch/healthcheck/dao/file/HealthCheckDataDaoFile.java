@@ -79,7 +79,7 @@ public class HealthCheckDataDaoFile implements HealthCheckDataDao {
     }
 
     @Override
-    public void saveBodyWeight(BodyWeightData bodyWeight) throws Exception {
+    public void saveBodyWeight(BodyWeightData bodyWeight) throws IOException {
         try {
             AppendDataToFile appendDataToFile = new AppendDataToFile(appContext, FILE_BODY_WEIGHT);
             String data = getParsedBodyWeightData(bodyWeight);
@@ -99,7 +99,7 @@ public class HealthCheckDataDaoFile implements HealthCheckDataDao {
     }
 
     @Override
-    public void saveGlucoseLevel(GlucoseLevelData glucoseLevel) throws Exception {
+    public void saveGlucoseLevel(GlucoseLevelData glucoseLevel) throws IOException {
         try {
             AppendDataToFile appendDataToFile = new AppendDataToFile(appContext, FILE_GLUCOSE_LEVEL);
             String data = getParsedGlucoseLevelData(glucoseLevel);
@@ -139,7 +139,7 @@ public class HealthCheckDataDaoFile implements HealthCheckDataDao {
     }
 
     @Override
-    public List<BloodPressureNorm> getBloodPressureNorms() throws Exception {
+    public List<BloodPressureNorm> getBloodPressureNorms() throws IOException {
         InputStream inputStream = appContext.getResources().openRawResource(R.raw.blood_pressure);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
@@ -158,7 +158,7 @@ public class HealthCheckDataDaoFile implements HealthCheckDataDao {
     }
 
     @Override
-    public List<PulseNorm> getPulseNorms() throws Exception {
+    public List<PulseNorm> getPulseNorms() throws IOException {
         InputStream inputStream = appContext.getResources().openRawResource(R.raw.pulse);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
