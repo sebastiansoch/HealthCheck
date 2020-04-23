@@ -37,13 +37,13 @@ public interface HealthCheckDataDao {
 
     List<GlucoseLevelNorm> getGlucoseLevelNorms() throws Exception;
 
-    List<BloodPressureData> getBloodPressureInRange(Range<String> stringRange) throws Exception;
+    List<BloodPressureData> getBloodPressureInRange(Range<String> dateRange) throws Exception;
 
-    List<PulseData> getPulseInRange(Range<String> dataRange) throws Exception;
+    List<PulseData> getPulseInRange(Range<String> dateRange) throws Exception;
 
-    List<BodyWeightData> getBodyWeighInRange(Range<String> stringRange) throws Exception;
+    List<BodyWeightData> getBodyWeighInRange(Range<String> dateRange) throws Exception;
 
-    List<GlucoseLevelData> getGlucoseLevelInRange(Range<String> stringRange) throws Exception;
+    List<GlucoseLevelData> getGlucoseLevelInRange(Range<String> dateRange) throws Exception;
 
     UserPersonalData getUserPersonalData() throws Exception;
 }

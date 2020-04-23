@@ -212,7 +212,7 @@ public class HealthCheckDataDaoFile implements HealthCheckDataDao {
     }
 
     @Override
-    public List<BloodPressureData> getBloodPressureInRange(Range<String> dataRange) throws IOException {
+    public List<BloodPressureData> getBloodPressureInRange(Range<String> dateRange) throws IOException {
         FileInputStream fileInputStream = appContext.openFileInput(FILE_BLOOD_PRESSURE);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
 
@@ -221,7 +221,7 @@ public class HealthCheckDataDaoFile implements HealthCheckDataDao {
 
         while ((readLine = bufferedReader.readLine()) != null) {
             String[] splitLine = readLine.split("\\|");
-            if (dataRange.contains(splitLine[0])) {
+            if (dateRange.contains(splitLine[0])) {
                 bloodPressureData.add(new BloodPressureData(splitLine[1], splitLine[2], splitLine[0]));
             }
         }
@@ -230,7 +230,7 @@ public class HealthCheckDataDaoFile implements HealthCheckDataDao {
     }
 
     @Override
-    public List<PulseData> getPulseInRange(Range<String> dataRange) throws IOException {
+    public List<PulseData> getPulseInRange(Range<String> dateRange) throws IOException {
         FileInputStream fileInputStream = appContext.openFileInput(FILE_PULSE);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
 
@@ -239,7 +239,7 @@ public class HealthCheckDataDaoFile implements HealthCheckDataDao {
 
         while ((readLine = bufferedReader.readLine()) != null) {
             String[] splitLine = readLine.split("\\|");
-            if (dataRange.contains(splitLine[0])) {
+            if (dateRange.contains(splitLine[0])) {
                 pulseData.add(new PulseData(splitLine[1], splitLine[0]));
             }
         }
@@ -248,7 +248,7 @@ public class HealthCheckDataDaoFile implements HealthCheckDataDao {
     }
 
     @Override
-    public List<BodyWeightData> getBodyWeighInRange(Range<String> dataRange) throws IOException {
+    public List<BodyWeightData> getBodyWeighInRange(Range<String> dateRange) throws IOException {
         FileInputStream fileInputStream = appContext.openFileInput(FILE_BODY_WEIGHT);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
 
@@ -257,7 +257,7 @@ public class HealthCheckDataDaoFile implements HealthCheckDataDao {
 
         while ((readLine = bufferedReader.readLine()) != null) {
             String[] splitLine = readLine.split("\\|");
-            if (dataRange.contains(splitLine[0])) {
+            if (dateRange.contains(splitLine[0])) {
                 bodyWeightData.add(new BodyWeightData(splitLine[1], splitLine[0]));
             }
         }
@@ -266,7 +266,7 @@ public class HealthCheckDataDaoFile implements HealthCheckDataDao {
     }
 
     @Override
-    public List<GlucoseLevelData> getGlucoseLevelInRange(Range<String> dataRange) throws IOException {
+    public List<GlucoseLevelData> getGlucoseLevelInRange(Range<String> dateRange) throws IOException {
         FileInputStream fileInputStream = appContext.openFileInput(FILE_GLUCOSE_LEVEL);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
 
@@ -275,7 +275,7 @@ public class HealthCheckDataDaoFile implements HealthCheckDataDao {
 
         while ((readLine = bufferedReader.readLine()) != null) {
             String[] splitLine = readLine.split("\\|");
-            if (dataRange.contains(splitLine[0])) {
+            if (dateRange.contains(splitLine[0])) {
                 glucoseLevelData.add(new GlucoseLevelData(splitLine[1], splitLine[2], splitLine[0]));
             }
         }
