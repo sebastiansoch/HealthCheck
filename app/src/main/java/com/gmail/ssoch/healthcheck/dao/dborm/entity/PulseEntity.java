@@ -5,24 +5,20 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.Date;
 
-@DatabaseTable(tableName = "blood_pressure")
-public class BloodPressureEntity {
-
+@DatabaseTable(tableName = "pulse")
+public class PulseEntity {
     @DatabaseField(generatedId = true)
     private long id;
     @DatabaseField
-    private int systolic;
-    @DatabaseField
-    private int diastolic;
+    private int pulse;
     @DatabaseField
     private Date measurementDate;
 
-    public BloodPressureEntity() {
+    public PulseEntity() {
     }
 
-    public BloodPressureEntity(int systolic, int diastolic, Date measurementDate) {
-        this.systolic = systolic;
-        this.diastolic = diastolic;
+    public PulseEntity(int pulse, Date measurementDate) {
+        this.pulse = pulse;
         this.measurementDate = measurementDate;
     }
 
@@ -34,20 +30,12 @@ public class BloodPressureEntity {
         this.id = id;
     }
 
-    public int getSystolic() {
-        return systolic;
+    public int getPulse() {
+        return pulse;
     }
 
-    public void setSystolic(int systolic) {
-        this.systolic = systolic;
-    }
-
-    public int getDiastolic() {
-        return diastolic;
-    }
-
-    public void setDiastolic(int diastolic) {
-        this.diastolic = diastolic;
+    public void setPulse(int pulse) {
+        this.pulse = pulse;
     }
 
     public Date getMeasurementDate() {

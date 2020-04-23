@@ -2,15 +2,27 @@ package com.gmail.ssoch.healthcheck.dao.dborm;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
+import android.util.Range;
 
+import com.gmail.ssoch.healthcheck.GlucoseLevel;
 import com.gmail.ssoch.healthcheck.dao.dborm.entity.BloodPressureEntity;
+import com.gmail.ssoch.healthcheck.dao.dborm.entity.BloodPressureNormEntity;
+import com.gmail.ssoch.healthcheck.dao.dborm.entity.BodyWeightEntity;
+import com.gmail.ssoch.healthcheck.dao.dborm.entity.BodyWeightNormEntity;
+import com.gmail.ssoch.healthcheck.dao.dborm.entity.GlucoseLevelNormEntity;
+import com.gmail.ssoch.healthcheck.dao.dborm.entity.PulseEntity;
+import com.gmail.ssoch.healthcheck.dao.dborm.entity.PulseNormEntity;
+import com.gmail.ssoch.healthcheck.dao.dborm.entity.UserPersonalDataEntity;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.Where;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
+import java.util.Date;
+import java.util.List;
 
 public class DBHelper extends OrmLiteSqliteOpenHelper {
 
@@ -25,22 +37,35 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
         try {
-            Log.i(DBHelper.class.getName(), "onCreate");
-            TableUtils.createTable(connectionSource, BloodPressureEntity.class);
+            createTables();
         } catch (SQLException ex) {
-            Log.e(DBHelper.class.getName(), "Can't create database", ex);
             throw new RuntimeException(ex);
         }
+    }
+
+    private void createTables() throws SQLException {
+        createTablesWithNorms();
+
+        TableUtils.createTable(connectionSource, BloodPressureEntity.class);
+        TableUtils.createTable(connectionSource, PulseEntity.class);
+        TableUtils.createTable(connectionSource, BodyWeightEntity.class);
+        TableUtils.createTable(connectionSource, GlucoseLevel.class);
+        TableUtils.createTable(connectionSource, UserPersonalDataEntity.class);
+    }
+
+    private void createTablesWithNorms() throws SQLException {
+        TableUtils.createTable(connectionSource, BloodPressureNormEntity.class);
+        TableUtils.createTable(connectionSource, PulseNormEntity.class);
+        TableUtils.createTable(connectionSource, BodyWeightNormEntity.class);
+        TableUtils.createTable(connectionSource, GlucoseLevelNormEntity.class);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try {
-            Log.i(DBHelper.class.toString(), "onUpgrade");
             TableUtils.dropTable(connectionSource, BloodPressureEntity.class, true);
             onCreate(database, connectionSource);
         } catch (SQLException ex) {
-            Log.e(DBHelper.class.toString(), "Can't drop database", ex);
             throw new RuntimeException(ex);
         }
     }
@@ -48,6 +73,19 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
     public <T> int create(T obj) throws SQLException {
         Dao<T, ?> dao = (Dao<T, ?>) getDao(obj.getClass());
         return dao.create(obj);
+    }
+
+    public<T> List<T> findInRange(T obj, Range<Date> range) throws SQLException {
+        Dao<T, ?> dao = (Dao<T, ?>) getDao(obj.getClass());
+        QueryBuilder<T, ?> builder = dao.queryBuilder();
+        Where<T, ?> where = builder.where();
+        where.ge("measurementDate", range.getLower()).and().le("measurementDate", range.getUpper());
+        return builder.query();
+    }
+
+    public <T> List<T> findAll(T obj) throws SQLException {
+        Dao<T, ?> dao = (Dao<T, ?> ) getDao(obj.getClass());
+        return dao.queryForAll();
     }
 
     public <T> int deleteById(T obj, Object id) throws SQLException {
