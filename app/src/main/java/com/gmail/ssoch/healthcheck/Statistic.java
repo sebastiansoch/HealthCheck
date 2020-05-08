@@ -211,13 +211,13 @@ public class Statistic extends BaseActivity {
     private String getCurrentMonth() {
         Calendar cal = Calendar.getInstance();
         int month = cal.get(Calendar.MONTH) + 1;
-        return cal.get(Calendar.YEAR) + "-" + String.format("%02d", month) + "-" + cal.get(Calendar.DAY_OF_MONTH);
+        return cal.get(Calendar.YEAR) + "-" + String.format("%02d", month) + "-" + String.format("%02d", cal.get(Calendar.DAY_OF_MONTH));
     }
 
     private String getPreviousMonth() {
         Calendar cal = Calendar.getInstance();
         int month = cal.get(Calendar.MONTH);
-        return cal.get(Calendar.YEAR) + "-" + String.format("%02d", month) + "-" + cal.get(Calendar.DAY_OF_MONTH);
+        return cal.get(Calendar.YEAR) + "-" + String.format("%02d", month) + "-" + String.format("%02d" , cal.get(Calendar.DAY_OF_MONTH));
     }
 
     private void configureTabLayoutView() {
