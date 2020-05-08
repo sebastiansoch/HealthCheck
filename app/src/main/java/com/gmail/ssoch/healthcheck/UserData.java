@@ -114,7 +114,7 @@ public class UserData extends BaseActivity {
     };
 
 
-    private void parseAndSaveData() throws ParseException, IOException {
+    private void parseAndSaveData() throws Exception {
         int genderID = genderSpinner.getSelectedItemPosition();
         String height = heightET.getText().toString();
         String dateOfBirth = dateOfBirthTV.getText().toString();
@@ -131,7 +131,7 @@ public class UserData extends BaseActivity {
         saveData(gender, height, dateOfBirth);
     }
 
-    private void saveData(String gender, String height, String dateOfBirth) throws IOException {
+    private void saveData(String gender, String height, String dateOfBirth) throws Exception {
         userPersonalData = new UserPersonalData(gender, height, dateOfBirth);
         healthCheckDataDao.saveUserPersonalData(userPersonalData);
     }
