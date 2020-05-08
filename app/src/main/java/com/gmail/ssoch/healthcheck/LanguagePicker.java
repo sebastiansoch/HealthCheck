@@ -1,6 +1,8 @@
 package com.gmail.ssoch.healthcheck;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -40,6 +42,7 @@ public class LanguagePicker extends DialogFragment {
     private Button.OnClickListener saveBtnListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            savePreferences(currentLanguage);
             setLocale(currentLanguage);
         }
     };
@@ -90,6 +93,13 @@ public class LanguagePicker extends DialogFragment {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         return displayMetrics.widthPixels;
+    }
+
+    private void savePreferences(String localeName) {
+        SharedPreferences preferences = getActivity().getSharedPreferences("AppLanguage", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("Chosen Language", localeName);
+        editor.commit();
     }
 
     private void setLocale(String localeName) {

@@ -1,11 +1,13 @@
 package com.gmail.ssoch.healthcheck;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+
+import java.util.Locale;
 
 public class MainActivity extends BaseActivity {
 
@@ -17,10 +19,23 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setApplicationLanguage();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         prepareButtons();
+    }
+
+    private void setApplicationLanguage() {
+        SharedPreferences preferences = getSharedPreferences("AppLanguage", MODE_PRIVATE);
+        String language = preferences.getString("Chosen Language", "en");
+
+        Locale myLocale = new Locale(language);
+
+        Configuration configuration = getResources().getConfiguration();
+        configuration.setLocale(myLocale);
+        getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
     }
 
     private void prepareButtons() {
