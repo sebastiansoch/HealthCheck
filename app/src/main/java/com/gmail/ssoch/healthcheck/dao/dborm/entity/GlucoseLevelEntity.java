@@ -7,6 +7,7 @@ import java.util.Date;
 
 @DatabaseTable(tableName = "glucose_level")
 public class GlucoseLevelEntity {
+
     @DatabaseField(generatedId = true)
     private long id;
     @DatabaseField

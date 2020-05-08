@@ -4,11 +4,11 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Range;
 
-import com.gmail.ssoch.healthcheck.GlucoseLevel;
 import com.gmail.ssoch.healthcheck.dao.dborm.entity.BloodPressureEntity;
 import com.gmail.ssoch.healthcheck.dao.dborm.entity.BloodPressureNormEntity;
 import com.gmail.ssoch.healthcheck.dao.dborm.entity.BodyWeightEntity;
 import com.gmail.ssoch.healthcheck.dao.dborm.entity.BodyWeightNormEntity;
+import com.gmail.ssoch.healthcheck.dao.dborm.entity.GlucoseLevelEntity;
 import com.gmail.ssoch.healthcheck.dao.dborm.entity.GlucoseLevelNormEntity;
 import com.gmail.ssoch.healthcheck.dao.dborm.entity.PulseEntity;
 import com.gmail.ssoch.healthcheck.dao.dborm.entity.PulseNormEntity;
@@ -49,7 +49,7 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
         TableUtils.createTable(connectionSource, BloodPressureEntity.class);
         TableUtils.createTable(connectionSource, PulseEntity.class);
         TableUtils.createTable(connectionSource, BodyWeightEntity.class);
-        TableUtils.createTable(connectionSource, GlucoseLevel.class);
+        TableUtils.createTable(connectionSource, GlucoseLevelEntity.class);
         TableUtils.createTable(connectionSource, UserPersonalDataEntity.class);
     }
 
