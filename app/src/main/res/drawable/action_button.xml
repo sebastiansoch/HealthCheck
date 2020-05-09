@@ -7,8 +7,8 @@
 
     <gradient android:angle="270"
         android:centerColor="@color/button"
-        android:endColor="@color/colorPrimary"
-        android:startColor="@color/colorPrimary" />
+        android:endColor="@color/button_sides"
+        android:startColor="@color/button_sides" />
 
     <padding android:bottom="5dp"
         android:left="5dp"
